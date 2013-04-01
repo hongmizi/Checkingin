@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  apply_for: 2013-04-01 15:56:08
+  approval: 2013-04-01 15:56:08
+  statu: MyString
+
+two:
+  apply_for: 2013-04-01 15:56:08
+  approval: 2013-04-01 15:56:08
+  statu: MyString

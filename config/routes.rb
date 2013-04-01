@@ -1,6 +1,11 @@
 Checkingin::Application.routes.draw do
-  devise_for :users
+  get "user_home/index"
 
+  get "home/index"
+
+  # get '/welcome', :to => "home#welcome", :as => :hao
+  devise_for :users
+  root :to => "home#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
