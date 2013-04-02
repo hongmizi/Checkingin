@@ -2,11 +2,11 @@
 <p>项目描述:<%= @project.description %> </p>
 <p>项目成员:   <%= link_to "增加新成员", users_path %></p>
 
-<% if @project.members.blank?%>
+<% if @project.users.blank?%>
     没有成员!
   <% else %>
     <ul>
-       <% for member in @project.members %>
+       <% for member in @project.users %>
             <li> <%= member.email %> </li>
        <% end %>
     </ul>
