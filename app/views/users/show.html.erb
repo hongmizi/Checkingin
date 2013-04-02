@@ -1,8 +1,16 @@
+
+<p> <%= link_to "增加新项目", new_project_path %> </p>
+
 <% if @projects.blank? %>
   no  projects
 <% else %>
+  <p>你自己的项目:</p>
   <% for project in @projects %>
-    <%= project.name %>
+    <ul>
+      <li> <%= link_to project.name, project_path(project.id) %>   <%= project.description %> </li>
+    </ul>
   <% end %>
 <% end %>
-<%= link_to "new project", new_project_path %>
+
+<p>你参与的项目:</p>
+
