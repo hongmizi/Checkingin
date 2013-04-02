@@ -1,0 +1,8 @@
+<% if @projects.blank? %>
+  no  projects
+<% else %>
+  <% for project in @projects %>
+    <%= project.name %>
+  <% end %>
+<% end %>
+<%= link_to "new project", new_project_path %>

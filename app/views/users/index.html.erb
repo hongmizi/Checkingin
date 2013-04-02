@@ -1,0 +1,14 @@
+<h1>个人主页</h1>
+
+<%= current_user.email %>
+
+<p>您现在拥有的项目:</p>
+<% for product in  @projects %>
+<ul>
+  <li> <%= product.name %> </li>
+  <li> <%= product.description %> </li>
+  <li> 加入链接 </li>
+  </ul>
+<%end %>
+
+<%= link_to "增加项目" , new_product_path %>
