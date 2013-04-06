@@ -6,7 +6,6 @@
 <% end %>
 <p>项目名称:<%= @project.name %> </p>
 <p>项目描述:<%= @project.description %> </p>
-<br> </br>
 <% if @admin %>
 <%= form_tag("/projects/add_member", :method => "get")  do %>
     <%= label_tag(:new_mem,"增加新成员") %>
@@ -15,19 +14,30 @@
     <%= submit_tag("确定") %>
   <%end%>
 <% end %>
-<p>项目成员:</p>
-<% if @project.users.blank?%>
-    没有成员!
-  <% else %>
-    <ul>
-       <% for member in @project.users %>
-            <li> <%= member.email %> </li>
-       <% end %>
-    </ul>
-<% end %>
+<p>项目状况:</p>
+<table border = "1">
+  <tr>
+    <th>成员</th>
+    <th>待审</th>
+    <th>拒绝</th>
+    <th>同意</th>
+    <th>总数</th>
+  </tr>
 
+  <% for member in @project.users %>
+    <tr>
+      <td> <%= member.email %> </td>
+      <td> <%= @pending[member] %> </td>
+      <td> <%= @decline[member] %> </td>
+      <td> <%= @approve[member] %> </td>
+      <td> <%= @sum[member] %> </td>
+    </tr>
+  <% end %>
+
+</table>
+<br />
 <%if not @admin %>
-  <%= Time.now.day %>
+  <%= Time.now %>
   <%= button_to( "今日打卡", project_path(:id => 8)) %> 
 <% end %>
 
@@ -35,13 +45,19 @@
   <tr> 
     <th>时间</th>
     <th>成员</th>
-    <th>状态</th> 
+    <th>状态</th>
+    <% if @admin %>
+      <th>拒绝</th>
+      <th>同意</th>
+    <% end %>
   </tr>
 <% @project.checkins.all.each do | checkin |%>
 <tr>
   <td><%= checkin.created_at %></td>
   <td><%= checkin.user.email%></td>
   <td><%= checkin.state %></td>
+  <td><%= button_to "拒绝", change_state_path(:project => @project ,:checkin => checkin, :state => "decline") %> </td>
+  <td><%= button_to "同意", change_state_path(:project => @project, :checkin => checkin, :state => "approve") %> </td>
 </tr>
 <% end %>
 </table>

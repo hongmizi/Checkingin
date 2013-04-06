@@ -10,6 +10,32 @@ class ProjectsController < ApplicationController
     else
       @admin = false
     end
+    # 统计数量
+    @approve = {}
+    @decline = {}
+    @pending = {}
+    @sum = {}
+    @project.users.each do |user|
+      @approve[user] = 0
+      @decline[user] = 0
+      @sum[user] = 0
+      @pending[user] = 0
+    end
+
+    @project.checkins.each do |checkin |
+      if checkin.state == "approve"
+        @approve[checkin.user] += 1
+      end
+      if checkin.state == "decline"
+        @decline[checkin.user] += 1
+      end
+      if checkin.state == "pending"
+        @pending[checkin.user] += 1
+      end
+      @sum[checkin.user] += 1
+
+    end
+
   end
 
   def new
@@ -33,6 +59,21 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+  end
+
+  def change_state
+    checkin = params[:checkin]
+    state = params[:state]
+    id = params[:id]
+    project = params[:project]
+    c= Project.find(project).checkins.find(checkin)
+    c.state = state
+    if c.save
+      flash.notice = 'success'
+    else
+      flash.alert = 'failed!'
+    end
+    redirect_to project_path(id)
   end
 
   def create_member
@@ -65,15 +106,17 @@ class ProjectsController < ApplicationController
       redirect_to project_path(id)
       return 
   end
+
   def check_in
     @project = Project.find(params[:id])
     @project.checkins.each do |checkin |
 
       time = checkin.created_at
       now = Time.now
-      if checkin.user == current.user and time.year == now.year and time.month == now.month and  time.day == now.day
+      if checkin.user == current_user and time.year == now.year and time.month == now.month and  time.day == now.day
         flash.alert = "you already checked in !!!"
         redirect_to project_path(params[:id])
+        return 
       end
     end
       a = Checkin.new(:user_id => current_user.id,:project_id => @project.id, :state => "pending")

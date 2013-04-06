@@ -6,9 +6,9 @@ Checkingin::Application.routes.draw do
   #
   devise_for :users
   resources :users
+  post '/projects/:id/change_state', :to => "projects#change_state", :as => :change_state
   resources :projects
   post '/projects/:id',:to => "projects#check_in"
-
   root :to => "home#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.

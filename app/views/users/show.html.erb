@@ -2,7 +2,7 @@
 <p> <%= link_to "增加新项目", new_project_path %> </p>
 
 <% if @projects.blank? %>
-  no  projects
+  你没有创建项目..
 <% else %>
   <p>你自己的项目:</p>
   <% for project in @projects %>
