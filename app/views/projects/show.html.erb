@@ -1,7 +1,21 @@
+<% if flash[:notice] %>
+  <%= puts flash[:notice] %>
+<% end %>
+<% if flash[:alert] %>
+  <%= puts flash[:alert] %>
+<% end %>
 <p>项目名称:<%= @project.name %> </p>
 <p>项目描述:<%= @project.description %> </p>
-<p>项目成员:   <%= link_to "增加新成员", users_path %></p>
-
+<br> </br>
+<% if @admin %>
+<%= form_tag("/projects/add_member", :method => "get")  do %>
+    <%= label_tag(:new_mem,"增加新成员") %>
+    <%= text_field_tag(:new_member) %>
+    <%= hidden_field_tag(:project_id, params[:id] ) %>
+    <%= submit_tag("确定") %>
+  <%end%>
+<% end %>
+<p>项目成员:</p>
 <% if @project.users.blank?%>
     没有成员!
   <% else %>
@@ -12,4 +26,23 @@
     </ul>
 <% end %>
 
+<%if not @admin %>
+  <%= Time.now.day %>
+  <%= button_to( "今日打卡", project_path(:id => 8)) %> 
+<% end %>
+
+<table border="1">
+  <tr> 
+    <th>时间</th>
+    <th>成员</th>
+    <th>状态</th> 
+  </tr>
+<% @project.checkins.all.each do | checkin |%>
+<tr>
+  <td><%= checkin.created_at %></td>
+  <td><%= checkin.user.email%></td>
+  <td><%= checkin.state %></td>
+</tr>
+<% end %>
+</table>
 

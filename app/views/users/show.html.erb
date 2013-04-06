@@ -13,4 +13,12 @@
 <% end %>
 
 <p>你参与的项目:</p>
-
+<% if @join_projects.blank?%>
+  为空
+<%else%>
+<ul>
+  <% for project in @join_projects %>
+    <li> <%= link_to project.name, project_path(project.id) %> </li>
+  <%end%>
+</ul>
+<% end %>

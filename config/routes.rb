@@ -1,13 +1,13 @@
 Checkingin::Application.routes.draw do
   get "home/index"
 
+  get  '/projects/add_member', :to => "projects#create_member"
   # get '/welcome', :to => "home#welcome", :as => :hao
   #
-  resources :users
-
-  resources :projects
-
   devise_for :users
+  resources :users
+  resources :projects
+  post '/projects/:id',:to => "projects#check_in"
 
   root :to => "home#index"
   # The priority is based upon order of creation:
