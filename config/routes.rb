@@ -1,6 +1,5 @@
 Checkingin::Application.routes.draw do
   get "home/index"
-
   get  '/projects/add_member', :to => "projects#create_member"
   # get '/welcome', :to => "home#welcome", :as => :hao
   #
@@ -8,8 +7,11 @@ Checkingin::Application.routes.draw do
   resources :users
   post '/projects/:id/change_state', :to => "projects#change_state", :as => :change_state
   get '/projects/change_state', :to => "projects#change_state"
-  resources :projects
-  post '/projects/:id',:to => "projects#check_in", :as => :check_in
+
+  resources :projects do
+    resources :checkin, :only => [:create]
+  end
+
   root :to => "home#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.

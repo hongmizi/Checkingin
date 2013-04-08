@@ -13,8 +13,6 @@ class Checkin < ActiveRecord::Base
     event :decline do
       transition [:pending] => :declined
     end
-
-    before_transition :from => :pending, :to => :approved, :do => :notify_the_applier
   end
 
   private
