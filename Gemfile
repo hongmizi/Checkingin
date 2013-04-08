@@ -9,11 +9,12 @@ gem 'sqlite3'
 gem 'devise'
 
 group :test do
-  gem 'rspec-rails'
 end
 
 group :development, :test do
   gem 'debugger'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
 gem 'state_machine'
