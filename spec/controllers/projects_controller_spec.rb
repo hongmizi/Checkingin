@@ -1,15 +1,17 @@
 require 'spec_helper'
 describe ProjectsController do
   before do
-    @request.env["devise.mapping"] = Devise.mappings[:admin]
-    @admin = User.first
-    sign_in @admin
-    #wiserwx=  User.last
-    #sign_in @wiserwx
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in FactoryGirl.create(:user) 
   end
-  describe "Get test" do
-    it " index should have respond " do
+  describe "Test routes" do
+    it " get new should have respond " do
       get :new
+      response.should be_success
+      response.code.should == "200"
+    end
+    it "show should have respond" do
+      get "new" 
       response.should be_success
       response.code.should == "200"
     end
