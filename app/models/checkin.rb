@@ -22,9 +22,9 @@ class Checkin < ActiveRecord::Base
   private
 
   def notify_the_applier
-    Rails.logger.info "========================================"
-    Rails.logger.info "Hi, you have approved a request."
-    Rails.logger.info "========================================"
+ #   Rails.logger.info "========================================"
+ #   Rails.logger.info "Hi, you have approved a request."
+ #   Rails.logger.info "========================================"
   end
 
   def notify_the_manager

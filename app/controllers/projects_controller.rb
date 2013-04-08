@@ -67,18 +67,18 @@ class ProjectsController < ApplicationController
     project_id = params[:id]
     project = Project.find(project_id)
     #判断是否是项目管理人
-    
-    User.all.each { |user| @admin = user if  user.projects.include?(project)}
-    #puts @admin.id
-    #puts params[:user_id]
-    #puts @admin.id.to_s != params[:user_id]
+    @admin = project.owner
     if @admin.blank? or current_user.blank? or  @admin.id != current_user.id
       flash.alert = 'you is not admin !'
       redirect_to project_path(id)
       return 
     end
     c= project.checkins.find(checkin)
-    c.state = state
+    if state == 'approved'
+      c.approve
+    elsif state == 'declined'
+      c.decline
+    end
     if c.save
       flash.notice = 'success'
     else
@@ -134,8 +134,7 @@ class ProjectsController < ApplicationController
     end
      a = Checkin.new(:user_id => current_user.id,:project_id => @project.id, :state => "pending")
      if a.save
-       #mail
-       Notifier.check_in(current_user,@project,a).deliver
+      # Notifier.check_in(current_user,@project,a).deliver
        flash.alert = "success added check in!"
      else
         flash.alert = "failed added check in!!"
