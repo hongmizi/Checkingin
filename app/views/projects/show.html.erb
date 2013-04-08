@@ -1,9 +1,3 @@
-<% if flash[:notice] %>
-  <%= puts flash[:notice] %>
-<% end %>
-<% if flash[:alert] %>
-  <%= puts flash[:alert] %>
-<% end %>
 <p>项目名称:<%= @project.name %> </p>
 <p>项目描述:<%= @project.description %> </p>
 <% if @admin %>
@@ -38,7 +32,7 @@
 <br />
 <%if not @admin %>
   <%= Time.now %>
-  <%= button_to( "今日打卡", project_path(:id => 8)) %> 
+  <%= button_to( "今日打卡", project_path(:id => params[:id] )) %> 
 <% end %>
 
 <table border="1">
@@ -56,9 +50,11 @@
   <td><%= checkin.created_at %></td>
   <td><%= checkin.user.email%></td>
   <td><%= checkin.state %></td>
-  <td><%= button_to "拒绝", change_state_path(:project => @project ,:checkin => checkin, :state => "decline") %> </td>
-  <td><%= button_to "同意", change_state_path(:project => @project, :checkin => checkin, :state => "approve") %> </td>
+  <% if @admin %>
+  <td><%= button_to "拒绝", change_state_path(:project => @project ,:checkin => checkin, :state => "decline", :user_id => current_user.id) %> </td>
+  <td><%= button_to "同意", change_state_path(:project => @project, :checkin => checkin, :state => "approve", :user_id => current_user.id) %> </td>
 </tr>
+<% end %>
 <% end %>
 </table>
 
