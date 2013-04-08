@@ -32,7 +32,7 @@
 <br />
 <%if not @admin %>
   <%= Time.now %>
-  <%= button_to( "今日打卡", project_path(:id => params[:id] )) %> 
+  <%= button_to( "今日打卡", project_path(:id => @project.id )) %> 
 <% end %>
 
 <table border="1">
