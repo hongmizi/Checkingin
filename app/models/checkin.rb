@@ -5,8 +5,6 @@ class Checkin < ActiveRecord::Base
 
   validates :user_id, :project_id, :state, :presence => true
 
-  before_save :notify_the_manager
-
   state_machine :initial => :pending do
     event :approve do
       transition [:pending] => :approved
@@ -25,9 +23,5 @@ class Checkin < ActiveRecord::Base
  #   Rails.logger.info "========================================"
  #   Rails.logger.info "Hi, you have approved a request."
  #   Rails.logger.info "========================================"
-  end
-
-  def notify_the_manager
-    # TODO send the email here
   end
 end

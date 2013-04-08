@@ -12,7 +12,6 @@ class Notifier < ActionMailer::Base
     @member = member
     @line = line
     mail subject: "打卡通知"
-    User.all.each { |user| @admin = user if user.projects.include?@project }
-    mail to: @admin.email
+    mail to: @project.owner.email
   end
 end

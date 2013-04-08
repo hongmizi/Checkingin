@@ -23,10 +23,10 @@ class ProjectsController < ApplicationController
     end
 
     @project.checkins.each do |checkin |
-      if checkin.state == "approve"
+      if checkin.state == "approved"
         @approve[checkin.user] += 1
       end
-      if checkin.state == "decline"
+      if checkin.state == "declined"
         @decline[checkin.user] += 1
       end
       if checkin.state == "pending"
@@ -74,6 +74,11 @@ class ProjectsController < ApplicationController
       return 
     end
     c= project.checkins.find(checkin)
+    if c.state != "pending"
+      flash.alert = 'you already declined/approved !'
+      redirect_to project_path(project_id)
+      return 
+    end
     if state == 'approved'
       c.approve
     elsif state == 'declined'
@@ -132,9 +137,9 @@ class ProjectsController < ApplicationController
         return 
       end
     end
-     a = Checkin.new(:user_id => current_user.id,:project_id => @project.id, :state => "pending")
-     if a.save
-      # Notifier.check_in(current_user,@project,a).deliver
+     c = Checkin.new(:user_id => current_user.id,:project_id => @project.id, :state => "pending")
+     if c.save
+       Notifier.check_in(current_user,@project,c).deliver
        flash.alert = "success added check in!"
      else
         flash.alert = "failed added check in!!"
