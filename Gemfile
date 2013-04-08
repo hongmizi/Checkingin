@@ -7,7 +7,17 @@ gem 'rails', '3.2.13'
 
 gem 'sqlite3'
 gem 'devise'
-gem 'rspec-rails'
+
+group :test do
+  gem 'rspec-rails'
+end
+
+group :development, :test do
+  gem 'debugger'
+end
+
+gem 'state_machine'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -35,4 +45,3 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-gem 'debugger'
