@@ -50,7 +50,7 @@
   <td><%= checkin.created_at %></td>
   <td><%= checkin.user.email%></td>
   <td><%= checkin.state %></td>
-  <% if @admin %>
+  <% if @admin and checkin.state == "pending"%>
     <td><%= button_to "拒绝", project_checkin_path(:project_id => @project, :id => checkin, :state => "declined"), :method => :put  %> </td>
     <td><%= button_to "同意", project_checkin_path(:project_id => @project, :id => checkin, :state => "approved"), :method => :put  %> </td>
 </tr>
