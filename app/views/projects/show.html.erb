@@ -1,10 +1,10 @@
 <p>项目名称:<%= @project.name %> </p>
 <p>项目描述:<%= @project.description %> </p>
 <% if @admin %>
-<%= form_tag("/projects/add_member", :method => "get")  do %>
+<%= form_tag(project_path, :method => "put")  do %>
     <%= label_tag(:new_mem,"增加新成员") %>
     <%= text_field_tag(:new_member) %>
-    <%= hidden_field_tag(:project_id, params[:id] ) %>
+    <%= hidden_field_tag(:project_id, params[:id]) if false %>
     <%= submit_tag("确定") %>
   <%end%>
 <% end %>

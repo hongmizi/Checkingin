@@ -51,19 +51,16 @@ class ProjectsController < ApplicationController
       render "new"
     end
   end
-  
-  def edit
-  end
 
-  def update
+  def edit
   end
 
   def destroy
   end
 
-  def create_member
+  def update
     #get => push   身份验证
-    id = params[:project_id]
+    id = params[:id]
     @project = Project.find(id)
     if not @project
       flash.alert = "can't find Project Plase try again!!!"
@@ -75,7 +72,7 @@ class ProjectsController < ApplicationController
     if not @user
       flash.alert = "can't find user!!!"
       redirect_to project_path(id)
-      return 
+      return
     end
     if @project.users.include?(@user)
       flash.alert = "already have this user!"
