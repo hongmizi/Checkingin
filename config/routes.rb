@@ -12,7 +12,7 @@ Checkingin::Application.routes.draw do
     get '/checkin/:id', :to => "checkin#update"
     resources :checkin
   end
-
+  get '/' , :to => "home#index"
   root :to => "home#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
