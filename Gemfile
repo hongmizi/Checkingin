@@ -6,6 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'devise'
+gem 'unicorn'
 
 group :test do
 end
@@ -19,7 +20,6 @@ end
 
 group :production, :staging do
   gem 'pg'
-  gem 'unicorn'
 end
 
 gem 'state_machine'
