@@ -9,6 +9,7 @@ Checkingin::Application.routes.draw do
   get '/projects/change_state', :to => "projects#change_state"
 
   resources :projects do
+    get '/checkin/:id', :to => "checkin#update"
     resources :checkin
   end
 
