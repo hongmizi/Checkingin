@@ -51,8 +51,8 @@
   <td><%= checkin.user.email%></td>
   <td><%= checkin.state %></td>
   <% if @admin %>
-  <td><%= button_to "拒绝", change_state_path(:project => @project ,:checkin => checkin, :state => "declined", :user_id => current_user.id) %> </td>
-  <td><%= button_to "同意", change_state_path(:project => @project, :checkin => checkin, :state => "approved", :user_id => current_user.id) %> </td>
+    <td><%= button_to "拒绝", project_checkin_path(:project_id => @project, :id => checkin, :state => "declined", :user_id => current_user.id), :method => :put  %> </td>
+    <td><%= button_to "同意", project_checkin_path(:project_id => @project, :id => checkin, :state => "approved", :user_id => current_user.id), :method => :put  %> </td>
 </tr>
 <% end %>
 <% end %>

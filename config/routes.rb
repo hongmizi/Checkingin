@@ -9,7 +9,7 @@ Checkingin::Application.routes.draw do
   get '/projects/change_state', :to => "projects#change_state"
 
   resources :projects do
-    resources :checkin, :only => [:create]
+    resources :checkin
   end
 
   root :to => "home#index"

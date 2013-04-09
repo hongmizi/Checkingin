@@ -22,4 +22,35 @@ class CheckinController < ApplicationController
     return 
 
   end
+
+  def update
+    checkin = params[:id]
+    state = params[:state]
+    project_id = params[:project_id]
+    project = Project.find(project_id)
+    #判断是否是项目管理人
+    @admin = project.owner
+    if @admin.blank? or current_user.blank? or  @admin.id != current_user.id
+      flash.alert = 'you is not admin !'
+      redirect_to project_path(project_id)
+      return 
+    end
+    c= project.checkins.find(checkin)
+    if c.state != "pending"
+      flash.alert = 'you already declined/approved !'
+      redirect_to project_path(project_id)
+      return 
+    end
+    if state == 'approved'
+      c.approve
+    elsif state == 'declined'
+      c.decline
+    end
+    if c.save
+      flash.notice = 'success'
+    else
+      flash.alert = 'failed!'
+    end
+    redirect_to project_path(project_id)
+  end
 end
