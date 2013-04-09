@@ -8,7 +8,10 @@
 </head>
 <body>
   <% if flash[:alert].present? %>
-    <%= flash[:alert] %>
+    <font color=red> <%= flash[:alert] %> </font>
+  <% end %>
+  <% if flash[:notice].present? %>
+    <font color=green> <%= flash[:notice] %> </font>
   <% end %>
   <div class="user_status" >
     <% if user_signed_in? %>

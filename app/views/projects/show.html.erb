@@ -32,7 +32,9 @@
 <br />
 <%if not @admin %>
   <%= Time.now %>
+  <br />
   <%= button_to( "今日打卡", project_checkin_index_path(:project_id => @project.id )) %> 
+  <br />
 <% end %>
 
 <table border="1">

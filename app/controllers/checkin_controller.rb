@@ -2,7 +2,6 @@
 class CheckinController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
-  
     @project.checkins.each do |checkin |
       time = checkin.created_at
       now = Time.now

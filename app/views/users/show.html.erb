@@ -1,10 +1,9 @@
 
 <p> <%= link_to "增加新项目", new_project_path %> </p>
-
+<p> <b>你创建的项目:</b> </p>
 <% if @projects.blank? %>
-  你没有创建项目..
+   空
 <% else %>
-  <p>你自己的项目:</p>
   <% for project in @projects %>
     <ul>
       <li> <%= link_to project.name, project_path(project.id) %>   <%= project.description %> </li>
@@ -12,9 +11,9 @@
   <% end %>
 <% end %>
 
-<p>你参与的项目:</p>
+<p> <b>你参与的项目:</b> </p>
 <% if @join_projects.blank?%>
-  为空
+  空
 <%else%>
 <ul>
   <% for project in @join_projects %>
