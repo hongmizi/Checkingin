@@ -19,6 +19,7 @@ end
 
 group :production, :staging do
   gem 'pg'
+  gem 'unicorn'
 end
 
 gem 'state_machine'
