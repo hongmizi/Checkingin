@@ -35,8 +35,11 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.new(params[:project])
     if @project.save
+      flash.notice = "创建成功！"
       redirect_to user_path(current_user.id)
+      return
     else
+      flash.alert = "创建失败！"
       render "new"
     end
   end
