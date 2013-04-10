@@ -2,11 +2,13 @@
 
 <%= form_for @project do |f| %>
   <p>
+    <%= f.label "标题"%>
     <%= f.text_field :name %>
   </p>
+  <%= f.label "描述"%>
   <%= f.text_area :description, :row => 6 %>
 
   <div class = "actions">
-    <%= f.submit :disable_with => "正在提交 ..." %>
+    <%= f.submit "创建新项目", :disable_with => "正在提交 ..." %>
   </div>
 <% end%>
