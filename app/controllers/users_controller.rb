@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     @projects = current_user.projects
     @join_projects =[]
     Project.all.each do |project|
-      if project.users.include?(current_user)
+      if project != nil and project.users.include?(current_user)
         @join_projects << project
       end
     end
