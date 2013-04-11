@@ -1,6 +1,6 @@
 <h1>新项目</h1>
 
-<%= form_for @project do |f| %>
+<%= form_for @project , :validate => true do |f| %>
   <p>
     <%= f.label "标题"%>
     <%= f.text_field :name %>

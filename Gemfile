@@ -7,7 +7,7 @@ gem 'rails', '3.2.13'
 
 gem 'devise'
 gem 'unicorn'
-
+gem 'client_side_validations'
 group :test do
 end
 
