@@ -6,13 +6,18 @@ class Ability
     can :read, Project do |project|
       project.users.include?(user)
     end
+
     can :manage, Project, :user_id => user.id
+
     can :create, Checkin do |checkin|
       project = checkin.project
+
       project.users.include?(user)
     end
+
     can :update, Checkin do |checkin|
       project = checkin.project
+
       project.owner == user
     end
 

@@ -1,32 +1,18 @@
 # coding: UTF-8
 class ProjectsController < ApplicationController
   before_filter :authenticate_user!
+
   def index
   end
 
   def show
-    @project = Project.find(params[:id])
-    authorize! :read, @project
-    @new_member = ""
-    @admin = true if current_user == @project.owner
+    @project = current_user.projects.find(params[:id])
 
-    # 统计数量
-    @approve, @decline, @pending, @sum = {}, {}, {},{}
-
-    #initialize
-    @project.users.each do |user|
-      @approve[user] = 0
-      @decline[user] = 0
-      @sum[user] = 0
-      @pending[user] = 0
-    end
-
-    if @project.checkins.each do |checkin |
-      @approve[checkin.user] += 1 if checkin.state == "approved"
-      @decline[checkin.user] += 1 if checkin.state == "declined"
-      @pending[checkin.user] += 1 if checkin.state == "pending"
+    @project.checkins.each do |checkin |
+      @approve[checkin.user] += 1 if checkin.approved?
+      @decline[checkin.user] += 1 if checkin.declined?
+      @pending[checkin.user] += 1 if checkin.pending?
       @sum[checkin.user] += 1
-    end
     end
   end
 
