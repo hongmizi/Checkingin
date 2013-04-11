@@ -21,10 +21,10 @@
   <% for member in @project.users %>
     <tr>
       <td><%= member.email %></td>
-      <td><%= @pending[member] %></td>
-      <td><%= @decline[member] %></td>
-      <td><%= @approve[member] %></td>
-      <td><%= @sum[member] %></td>
+      <td><%= @number_of_pending %></td>
+      <td><%= @number_of_declined %></td>
+      <td><%= @number_of_approved %></td>
+      <td><%= member.checkins.count %></td>
     </tr>
   <% end %>
 </table>

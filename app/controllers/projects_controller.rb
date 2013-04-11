@@ -7,12 +7,24 @@ class ProjectsController < ApplicationController
 
   def show
     @project = current_user.projects.find(params[:id])
-
-    @project.checkins.each do |checkin |
-      @approve[checkin.user] += 1 if checkin.approved?
-      @decline[checkin.user] += 1 if checkin.declined?
-      @pending[checkin.user] += 1 if checkin.pending?
-      @sum[checkin.user] += 1
+    authorize!(:read,@project)
+    
+    begin
+      @number_of_approved =  current_user.checkins.where(:state => "approved",:project => @project).count 
+    rescue Exception
+      @number_of_approved = 0
+    end
+    
+    begin
+      @number_of_declined =  current_user.checkins.where(:state => "declined",:project => @project).count 
+    rescue Exception
+      @number_of_declined = 0
+    end
+    
+    begin
+      @number_of_pending =   current_user.checkins.where(:state => "pending", :project => @project).count 
+    rescue Exception
+      @number_of_pending = 0
     end
   end
 
@@ -61,6 +73,11 @@ class ProjectsController < ApplicationController
     end
     if @project.users.include?(@user)
       flash.alert = "此用户已经在项目中了.."
+      redirect_to project_path(id)
+      return
+    end
+    if @project.owner == current_user
+      flash.alert = "你不能添加自己为项目成员..."
       redirect_to project_path(id)
       return
     end
