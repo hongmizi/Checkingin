@@ -1,6 +1,6 @@
 <p>项目名称:<%= @project.name %> </p>
 <p>项目描述:<%= @project.description %> </p>
-<% if @admin %>
+<%if can? :manage, @project %>
 <%= form_tag(project_path, :method => "put")  do %>
     <%= label_tag(:new_mem,"增加新成员") %>
     <%= text_field_tag(:new_member) %>

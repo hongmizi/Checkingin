@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    authorize! :read, @project
     @new_member = ""
     @admin = true if current_user == @project.owner
 
@@ -59,6 +60,7 @@ class ProjectsController < ApplicationController
       redirect_to project_path(id)
       return 
     end
+    authorize! :manage, @project
     if @project.owner != current_user
       flash.alert = "你不是此项目的管理员!"
       redirect_to project_path(id)
