@@ -47,15 +47,12 @@ class ProjectsController < ApplicationController
       @checkins_on_this_month[i] = "nodata" 
     end
     @checkin_on_day = {}
-    #puts "-------------"
-    #debugger
     begin
       @user.checkins.where(:project_id => @project.id).each do |checkin|
         time = checkin.created_at
-        puts "time.month:#{time.month} @time.month:#{@time.month}"
         if time.month == @time.month
           @checkins_on_this_month[time.day] = checkin.state
-          @checkin_onday[time.day] = checkin
+          @checkin_on_day[time.day] = checkin
         end
       end
     rescue Exception
@@ -63,25 +60,43 @@ class ProjectsController < ApplicationController
 
     @state_width = 200
 
+    # 统计信息
     can? :manage, @project
+
+    @number_of_approved_for_user = {}
+    @number_of_declined_for_user = {}
+    @number_of_pending_for_user = {}
+    @number_of_checkin_sum_for_user = {}
     begin
-      @number_of_approved =  current_user.checkins.where(:state => "approved",:project => @project).count 
+      @project.users.each do |member|
+        begin
+          @number_of_approved_for_user[member.id] =  member.checkins.where(:state => "approved",:project => @project).count 
+        rescue Exception
+          @number_of_approved_for_user[member.id] = 0 
+        end
+
+        begin
+          @number_of_declined_for_user[member.id] =  member.checkins.where(:state => "declined",:project => @project).count 
+        rescue Exception
+          @number_of_declined_for_user[member.id] = 0 
+        end
+
+        begin
+          @number_of_pending_for_user[member.id] =   member.checkins.where(:state => "pending", :project => @project).count 
+        rescue Exception
+          @number_of_pending_for_user[member.id] = 0
+        end
+        
+        begin
+          @number_of_checkin_sum_for_user[member.id] =  member.checkins.where(:project_id => @project.id).count
+        rescue Exception
+          @number_of_checkin_sum_for_user[member.id] = 0 
+        end
+
+      end
     rescue Exception
-      @number_of_approved = 0
     end
-    
-    begin
-      @number_of_declined =  current_user.checkins.where(:state => "declined",:project => @project).count 
-    rescue Exception
-      @number_of_declined = 0
-    end
-    
-    begin
-      @number_of_pending =   current_user.checkins.where(:state => "pending", :project => @project).count 
-    rescue Exception
-      @number_of_pending = 0
-    end
-  end
+      end
 
   def new
     @project = current_user.projects.new
