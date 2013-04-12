@@ -13,10 +13,10 @@ describe ProjectsController do
       response.should be_success
       response.code.should == "200"
     end
-    it "show should have respond" do
+    it "it user not is project member should have respond 404" do
       get :show, id:@project.id
-      response.should be_success
-      response.code.should == "200"
+      response.should_not be_success
+      response.code.should == "404"
     end
     it "create should have respond" do
       post :create, name:@project.name, description:@project.description
