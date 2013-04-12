@@ -3,7 +3,7 @@
 <% if can? :manage, @project %>
 <%= form_tag(project_path, :method => "put")  do %>
     <%= label_tag(:new_mem,"增加新成员") %>
-    <%= text_field_tag(:new_member) %>
+    <%= select_tag(:new_member,@emails.html_safe) %>
     <%= hidden_field_tag(:project_id, params[:id]) if false %>
     <%= submit_tag("确定") %>
   <% end %>

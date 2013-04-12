@@ -62,7 +62,13 @@ class ProjectsController < ApplicationController
 
     # 统计信息
     can? :manage, @project
-
+    @emails = ""
+    User.all.each do |user|
+      if user != current_user
+        select = "<option>"+ user.email + "</option>" 
+        @emails += select
+      end
+    end
     @number_of_approved_for_user = {}
     @number_of_declined_for_user = {}
     @number_of_pending_for_user = {}
