@@ -94,8 +94,8 @@
           <% end %>
           
           <% if can?(:manage, @project) and @checkins_on_this_month[i] == "pending" %>
-            <td><%= button_to "拒绝", project_checkin_path(:project_id => @project, :id => @checkin_on_day[i], :state => "declined"), :method => :put  %> </td>
-            <td><%= button_to "同意", project_checkin_path(:project_id => @project, :id => @checkin_on_day[i], :state => "approved"), :method => :put  %> </td>
+            <td><%= button_to("拒绝", project_checkin_path(:project_id => @project, :id => @checkin_on_day[i], :state => "declined"), :method => "put")  %> </td>
+            <td><%= button_to("同意", project_checkin_path(:project_id => @project, :id => @checkin_on_day[i], :state => "approved"), :method => "put")  %> </td>
           <%end%>
       </tr>
     <% end %>

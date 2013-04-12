@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = current_user.projects.find(params[:id])
+    @project = Project.find(params[:id])
     authorize!(:read,@project)
     @year = params[:year]
     @year = Time.now.year if @year == nil
@@ -26,6 +26,9 @@ class ProjectsController < ApplicationController
     
     user = params[:user]
     @user = User.find(user) if user
+    if @user == nil and can? :manage, @project
+      @user = @project.users.first
+    end
     @user = current_user unless @user
     
     # find the earliest chinckin time in this project
@@ -44,9 +47,12 @@ class ProjectsController < ApplicationController
       @checkins_on_this_month[i] = "nodata" 
     end
     @checkin_on_day = {}
+    #puts "-------------"
+    #debugger
     begin
-      @user.checkins.where(:project => @project).each do |checkin|
+      @user.checkins.where(:project_id => @project.id).each do |checkin|
         time = checkin.created_at
+        puts "time.month:#{time.month} @time.month:#{@time.month}"
         if time.month == @time.month
           @checkins_on_this_month[time.day] = checkin.state
           @checkin_onday[time.day] = checkin
@@ -54,8 +60,10 @@ class ProjectsController < ApplicationController
       end
     rescue Exception
     end
-    @state_width = 10
-can? :manage, @project
+
+    @state_width = 200
+
+    can? :manage, @project
     begin
       @number_of_approved =  current_user.checkins.where(:state => "approved",:project => @project).count 
     rescue Exception
@@ -123,7 +131,7 @@ can? :manage, @project
       redirect_to project_path(id)
       return
     end
-    if @project.owner == current_user
+    if @project.owner == @user 
       flash.alert = "你不能添加自己为项目成员..."
       redirect_to project_path(id)
       return
