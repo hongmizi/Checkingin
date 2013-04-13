@@ -1,11 +1,12 @@
 # coding: UTF-8
 class Management::CheckinsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :authorize_user
   before_filter :find_the_project
+  before_filter :authorize_user
 
   # 用户的打卡情况
   def index
+    @user = User.find(params[:member_id])
     @checkins = @project.checkins.where(:user_id => params[:member_id]).order("checkins.created_at asc")
     @year = params[:year]
     @year = Time.now.year if @year == nil
@@ -24,42 +25,13 @@ class Management::CheckinsController < ApplicationController
     @time_last_month = Time.new(@time_last_month.year, @time_last_month.month)
     
     # find the earliest chinckin time in this project
-    @time_earlist_checkin = Time.now
-    begin
-      @checkins.each do |checkin|
-        @time_earlist_check = checkin.created_at if @time_earlist_check > checkin.created_at
-      end
-    rescue Exception
+    if @checkins.length != 0
+      @time_earlist_checkin = @checkins.first.created_at
+    else
+      @time_earlist_checkin = Time.now
     end
-    # initilize the checkins on this month
-    @days_num_months = [0,31,28,31,30,31,30,31,31,30,31,30,31]
-    @days_num_months[1] = 29 if Date.leap?(@time.year)
-    @checkins_on_this_month = []
-    for i in 1..@days_num_months[@time.month] 
-      @checkins_on_this_month[i] = "nodata" 
-    end
-    @checkin_on_day = {}
-    begin
-      @user.checkins.where(:project_id => @project.id).each do |checkin|
-        time = checkin.created_at
-        if time.month == @time.month
-          @checkins_on_this_month[time.day] = checkin.state
-          @checkin_on_day[time.day] = checkin
-        end
-      end
-    rescue Exception
-    end
+    @checkins_on_month = CheckinDomain.new.get_user_checkins_on_month(@time,@user.id,@project.id)
 
-    @state_width = 200
-
-    # 统计信息
-    @emails = ""
-    User.all.each do |user|
-      if user != current_user
-        select = "<option>"+ user.email + "</option>" 
-        @emails += select
-      end
-    end
   end
   
   def update
@@ -82,13 +54,16 @@ class Management::CheckinsController < ApplicationController
     end
     redirect_to project_path(@project)
   end
-
+  
+ 
   protected
   def find_the_project
     @project = current_user.projects.find(params[:project_id])
   end
   
   def authorize_user
+    find_the_project if @project.nil?
+
     authorize!(:manage, @project) 
   end
 end
