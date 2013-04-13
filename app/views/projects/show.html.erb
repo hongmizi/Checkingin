@@ -1,44 +1,36 @@
 <p>项目名称:<%= @project.name %> </p>
 <p>项目描述:<%= @project.description %> </p>
 <% if can? :manage, @project %>
-<%= form_tag(project_path, :method => "put")  do %>
+  <%= form_tag(project_path, :method => "put")  do %>
     <%= label_tag(:new_mem,"增加新成员") %>
     <%= select_tag(:new_member,@emails.html_safe) %>
     <%= hidden_field_tag(:project_id, params[:id]) if false %>
     <%= submit_tag("确定") %>
   <% end %>
-<% end %>
 
-<% if can? :manage, @project %>
-<p>项目状况:</p>
-<table border = "0">
-  <tr>
-    <th>成员</th>
-    <th>待审</th>
-    <th>拒绝</th>
-    <th>同意</th>
-    <th>总数</th>
-  </tr>
-
-  <% for member in @project.users %>
+  <p>项目状况:</p>
+  <table border = "0">
     <tr>
-      <td><%= link_to(member.email, project_path(:id => @project.id, :user => member.id) ) %></td>
-      <td><%= @number_of_pending_for_user[member.id] %></td>
-      <td><%= @number_of_declined_for_user[member.id] %></td>
-      <td><%= @number_of_approved_for_user[member.id] %></td>
-      <td><%= @number_of_checkin_sum_for_user[member.id] %></td>
+      <th>成员</th>
+      <th>待审</th>
+      <th>拒绝</th>
+      <th>同意</th>
+      <th>总数</th>
     </tr>
-  <% end %>
-</table>
-<br />
+
+    <% for member in @project.users %>
+      <tr>
+        <td><%= link_to(member.email, project_checkin_path(@project, :member_id => member.id)) %></td>
+        <td><%= @number_of_pending_for_user[member.id] %></td>
+        <td><%= @number_of_declined_for_user[member.id] %></td>
+        <td><%= @number_of_approved_for_user[member.id] %></td>
+        <td><%= @number_of_checkin_sum_for_user[member.id] %></td>
+      </tr>
+    <% end %>
+  </table>
+  <br />
 <%end%>
 
-<% if can?(:create, Checkin.new(:project => @project)) %>
-  <%= Time.now %>
-  <br />
-  <%= button_to( "今日打卡", project_checkin_index_path(:project_id => @project.id )) %> 
-  <br />
-<% end %>
 
 <table border="0">
   <tr>

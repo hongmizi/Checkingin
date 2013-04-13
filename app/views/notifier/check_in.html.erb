@@ -2,7 +2,7 @@
 <p>在项目<b> <%= @project.name %> </b> 中 </p>
 <p>您的成员 <b> <%= @member.email %> </b> 于 <b> <%= Time.now %> </b> 向你申请打卡</p>
   <% address = "http://checkingin.herokuapp.com"%>
-  请选择 <%= link_to "拒绝", sprintf("%s/projects/%s/checkin/%s?state=%s&project_id=%s",address,@project.id,@line.id,"declined",@project.id)   %>
+  请选择 <%= link_to "拒绝", sprintf("%s/projects/%s/checkins/%s?state=%s&project_id=%s",address,@project.id,@line.id,"declined",@project.id)   %>
   或 
-  <%= link_to "同意",   sprintf("%s/projects/%s/checkin/%s?state=%s&project_id=%s",address,@project.id,@line.id,"approved",@project.id)  %>
+  <%= link_to "同意",   sprintf("%s/projects/%s/checkins/%s?state=%s&project_id=%s",address,@project.id,@line.id,"approved",@project.id)  %>
 

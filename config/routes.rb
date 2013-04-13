@@ -1,16 +1,15 @@
 Checkingin::Application.routes.draw do
-  get  '/projects/add_member', :to => "projects#create_member"
-  # get '/welcome', :to => "home#welcome", :as => :hao
-  #
+  root :to => "home#index"
   devise_for :users
+
   resources :users
-  post '/projects/:id/change_state', :to => "projects#change_state", :as => :change_state
+
+  resources :checkins
 
   resources :projects do
-    get '/checkin/:id', :to => "checkin#update"
-    resources :checkin
+    resources :checkins, :module => "management"
   end
-  root :to => "home#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

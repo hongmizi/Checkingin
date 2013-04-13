@@ -4,23 +4,10 @@ class Ability
   def initialize(user)
     # Define abilities for the passed in user here. For example:
     can :read, Project do |project|
-      project.users.include?(user)
+      project.users.include?(user) or project.owner == user
     end
 
     can :manage, Project, :user_id => user.id
-
-    can :create, Checkin do |checkin|
-      project = checkin.project
-
-      project.users.include?(user)
-    end
-
-    can :update, Checkin do |checkin|
-      project = checkin.project
-
-      project.owner == user
-    end
-
     #
     # The first argument to `can` is the action you are giving the user 
     # permission to do.

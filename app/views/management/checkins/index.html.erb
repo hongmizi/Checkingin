@@ -1,0 +1,67 @@
+<table border="0">
+  <tr>
+    <td colspan="5" align="center"><%= @user.email %></td>
+  </tr>
+  <tr>
+    <td>
+      <% if @time_last_month > @time_earlist_checkin %>
+        <%= link_to "上月", project_path(:id => @project, :year => @time_last_month.year, :month => @time_last_month.month, :user => @user) %>
+      <% end %>
+    </td>
+
+    <td align="center"><%= @time.strftime("%Y/%m")%></td>
+
+    <td colspan="2" >
+      <% if @time_next_month <= Time.now %>
+        <%= link_to "下月" ,project_path(:id => @project, :year => @time_next_month.year, :month => @time_next_month.month, :user => @user) %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <tr>
+      <th>时间</th>
+      <th>状态</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% for i=0; i<Time.days_in_month(Time.month, Time.year); i++ %>
+      <% if @member.has_checked_in_on?(Time.year, Time.month, i) %>
+        <% @checkin = @member.checkins.on(Time.year, Time.month, i) %>
+
+        <% if @checkin.approved? %>
+        <% elsif @checkin.delcined? %>
+        <% else %>
+        <% end %>
+      <% else %>
+        Not checked in
+      <% end %>
+    <% end %>
+
+
+    <% for day in 1...@checkins_on_this_month.length %>
+      <tr>
+        <td align="center"><%= day %></td>
+        <% if @checkins_on_this_month[day] == "pending"%>
+          <td bgcolor = "yellow"><%= " " * @state_width %></td>
+        <% elsif @checkins_on_this_month[day] == "approved"%>
+          <td bgcolor = "green"><%= " " * @state_width %></td>
+        <% elsif @checkins_on_this_month[day] == "declined"%>
+          <td bgcolor = "red"><%= " " * @state_width %></td>
+        <% else %>
+          <td bgcolor = "white"><%= " " * @state_width %></td>
+        <% end %>
+        <% if can?(:manage, @project) and @checkins_on_this_month[day] == "pending" %>
+          <td>
+            <%= button_to("拒绝", project_checkin_path(:project_id => @project, :id => @checkin_on_day[day], :state => "declined"),
+                                                       :method => :put)%>
+          </td>
+          <td>
+            <%= button_to("同意", project_checkin_path(:project_id => @project, :id => @checkin_on_day[day], :state => "approved"),
+                                                       :method => :put)  %>
+          </td>
+        <%end%>
+      </tr>
+    <% end %>
+  </table>
