@@ -1,7 +1,7 @@
 Checkingin::Application.configure do
   config.logger = Logger.new(STDOUT)
   config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'DEBUG' )
-
+  default_url_options[:host] = "http://127.0.0.1:3000"
  #Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
