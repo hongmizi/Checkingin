@@ -36,7 +36,7 @@ class Management::CheckinsController < ApplicationController
   
   def update
     @checkin = @project.checkins.find(params[:id])
-    
+    state = params[:state]
     if @checkin.state != "pending"
       flash.alert = '你已经审批过了!'
       redirect_to project_path(@project)

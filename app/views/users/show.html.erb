@@ -1,4 +1,5 @@
 <p> <%= link_to "增加新项目", new_project_path %> </p>
+<%= link_to "我的打卡情况", checkins_path%>
 <p> <b>你创建的项目:</b> </p>
 <% if @projects.blank? %>
    空
@@ -16,8 +17,10 @@
 <%else%>
   <ol>
     <% for project in @join_projects %>
-      <li><%= link_to project.name, project_path(project.id) %> </li>
-      <li><%= button_to( "今日打卡", checkins_path(project))%></li>
+      <li>
+         <%= link_to project.name, project_path(project.id)%>
+         <%= button_to( "今日打卡", checkins_path(:project_id => project.id))%>
+      </li>
     <% end %>
   </ol>
 <% end %>

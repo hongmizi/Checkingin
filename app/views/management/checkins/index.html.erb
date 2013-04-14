@@ -5,7 +5,7 @@
   <tr>
     <td>
       <% if @time_last_month > @time_earlist_checkin %>
-        <%= link_to "上月", project_path(:id => @project, :year => @time_last_month.year, :month => @time_last_month.month, :user => @user) %>
+        <%= link_to "上月", project_checkins_path(:project_id => @project.id, :year => @time_last_month.year, :month => @time_last_month.month, :member_id => @user.id) %>
       <% end %>
     </td>
 
@@ -13,7 +13,7 @@
 
     <td colspan="2" >
       <% if @time_next_month <= Time.now %>
-        <%= link_to "下月" ,project_path(:id => @project, :year => @time_next_month.year, :month => @time_next_month.month, :user => @user) %>
+        <%= link_to "下月" ,project_checkins_path(:project_id => @project.id, :year => @time_next_month.year, :month => @time_next_month.month, :member_id => @user.id) %>
       <% end %>
     </td>
   </tr>

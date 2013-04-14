@@ -8,40 +8,6 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     authorize!(:read,@project)
-    can?(:manage, @project)
-    @number_of_approved_for_user = {}
-    @number_of_declined_for_user = {}
-    @number_of_pending_for_user = {}
-    @number_of_checkin_sum_for_user = {}
-    begin
-      @project.users.each do |member|
-        begin
-          @number_of_approved_for_user[member.id] =  member.checkins.where(:state => "approved",:project => @project).count 
-        rescue Exception
-          @number_of_approved_for_user[member.id] = 0 
-        end
-
-        begin
-          @number_of_declined_for_user[member.id] =  member.checkins.where(:state => "declined",:project => @project).count 
-        rescue Exception
-          @number_of_declined_for_user[member.id] = 0 
-        end
-
-        begin
-          @number_of_pending_for_user[member.id] =   member.checkins.where(:state => "pending", :project => @project).count 
-        rescue Exception
-          @number_of_pending_for_user[member.id] = 0
-        end
-
-        begin
-          @number_of_checkin_sum_for_user[member.id] =  member.checkins.where(:project_id => @project.id).count
-        rescue Exception
-          @number_of_checkin_sum_for_user[member.id] = 0 
-        end
-
-      end
-    rescue Exception
-    end
   end
 
   def new

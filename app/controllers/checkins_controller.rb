@@ -4,6 +4,12 @@ class CheckinsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_the_project
 
+  def index
+    @projects = []
+    Project.all.each do |project|
+      @project << project if project.users.include?(current_user)
+    end
+  end
   def create
     authorize!(:read, @project)
     @checkin =  current_user.checkins.new(:project_id => @project.id)

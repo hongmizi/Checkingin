@@ -1,0 +1,21 @@
+  <table border = "0">
+    <tr>
+      <th>项目</th>
+      <th>待审</th>
+      <th>拒绝</th>
+      <th>同意</th>
+      <th>总数</th>
+    </tr>
+
+    <% for project in @projects %>
+      <tr>
+        <td><%= project.name%></td>
+        <% @count = CheckinDomain.new.get_user_checkins_count_in_project(current_user.id, project.id)%>
+        <td><%= @count[:pending]%></td>
+        <td><%= @count[:declined]%></td>
+        <td><%= @count[:approved]%></td>
+        <td><%= @count[:sum]%></td>
+      </tr>
+    <% end %>
+  </table>
+ 
