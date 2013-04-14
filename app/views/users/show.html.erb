@@ -1,14 +1,12 @@
-<p> <%= link_to "增加新项目", new_project_path %> </p>
-<%= link_to "我的打卡情况", checkins_path%>
 <p> <b>你创建的项目:</b> </p>
 <% if @projects.blank? %>
-   空
+  空
 <% else %>
-  <% for project in @projects %>
-    <ul>
+  <ol>
+    <% for project in @projects %>
       <li> <%= link_to project.name, project_path(project.id) %>   <%= project.description %> </li>
-    </ul>
-  <% end %>
+    <% end %>
+  </ol>
 <% end %>
 
 <p><b>你参与的项目:</b></p>

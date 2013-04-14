@@ -1,14 +1,21 @@
-<h1>新项目</h1>
+<div class="container-fluid">
+  <%= form_for @project , :validate => true do |f| %>
+    <div class="row-fluid"> 
+      <div class="span1" align="center">
+        <%= f.label "标题:"%>
+      </div>
+      <div class="span8">
+        <%= f.text_field :name,:validate => {:pressence => true } %>
+      </div>
+    </div>
 
-<%= form_for @project , :validate => true do |f| %>
-  <p>
-    <%= f.label "标题"%>
-    <%= f.text_field :name,:validate => {:pressence => true } %>
-  </p>
-  <%= f.label "描述"%>
-  <%= f.text_area :description, :row => 6, :validatte => true %>
+    <div class="span1">
+      <%= f.label "描述:"%>
+    </div>
+    <%= f.text_area :description, :validatte => true %>
 
-  <div class = "actions">
-    <%= f.submit "创建新项目", :disable_with => "正在提交 ..." %>
-  </div>
-<% end%>
+    <div class = "actions" align="center">
+      <%= f.submit "创建新项目", :disable_with => "正在提交 ..." %>
+    </div>
+  <% end%>
+</div>

@@ -1,4 +1,4 @@
-  <table border = "0">
+  <table border = "1">
     <tr>
       <th>项目</th>
       <th>待审</th>
@@ -6,7 +6,15 @@
       <th>同意</th>
       <th>总数</th>
     </tr>
-
+    <% unless @project %>
+      <tr>
+        <th>0</th>
+        <th>0</th>
+        <th>0</th>
+        <th>0</th>
+        <th>0</th>
+      </tr>
+    <% end %>
     <% for project in @projects %>
       <tr>
         <td><%= project.name%></td>
@@ -19,6 +27,7 @@
     <% end %>
   </table>
 
+    <br /> <br />
  <table border = "1">
     <tr>
       <th>项目</th>
