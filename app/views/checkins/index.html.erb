@@ -18,12 +18,20 @@
       </tr>
     <% end %>
   </table>
-  <ol>
-  <% @checkins.each do |checkin| %>
-    <li>
-      <%= checkin.created_at %>
-      <%= Project.find(checkin.project_id) %>
-      <%= checkin.state %>
-    </li>
-  <% end %>
-</ol>
+
+ <table border = "1">
+    <tr>
+      <th>项目</th>
+      <th>状态</th>
+      <th>时间</th>
+    </tr>
+
+    <% for checkin in @checkins %>
+      <tr>
+        <td><%= checkin.project.name if checkin.project %></td>
+        <td><%= checkin.state %></td>
+        <td><%= checkin.created_at %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @checkins %>

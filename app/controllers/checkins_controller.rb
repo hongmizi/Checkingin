@@ -11,7 +11,6 @@ class CheckinsController < ApplicationController
     end
     params[:page] = 1 unless params[:page]
     @checkins = Checkin.where(user_id:current_user.id).paginate(page:params[:page])
-   # Checkin.where(user_id:4).paginate(page:1)
 
   end
   def create
