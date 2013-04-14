@@ -7,7 +7,7 @@ class CheckinsController < ApplicationController
   def index
     @projects = []
     Project.all.each do |project|
-      @project << project if project.users.include?(current_user)
+      @projects << project if project.users.include?(current_user)
     end
   end
   def create
@@ -33,7 +33,11 @@ class CheckinsController < ApplicationController
   end
 protected
   def find_the_project
-    @project = Project.find(params[:project_id])
+    begin
+      @project = Project.find(params[:project_id])
+    rescue Exception
+      @project = nil
+    end
   end
 
 end
