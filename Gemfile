@@ -6,6 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'cancan'
 gem 'devise'
+gem 'will_paginate','~>3.0'
 gem 'unicorn'
 gem 'client_side_validations'
 group :test do
