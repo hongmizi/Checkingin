@@ -6,6 +6,7 @@ Checkingin::Application.routes.draw do
 
   resources :checkins
 
+  get '/projects/:project_id/checkins/:id', :to => 'management/checkins#update'
   resources :projects do
     resources :checkins, :module => "management"
   end
