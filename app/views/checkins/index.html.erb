@@ -1,20 +1,20 @@
-  <table border = "1">
+<table border = "1">
+  <tr>
+    <th>项目</th>
+    <th>待审</th>
+    <th>拒绝</th>
+    <th>同意</th>
+    <th>总数</th>
+  </tr>
+  <% unless @project %>
     <tr>
-      <th>项目</th>
-      <th>待审</th>
-      <th>拒绝</th>
-      <th>同意</th>
-      <th>总数</th>
+      <th>0</th>
+      <th>0</th>
+      <th>0</th>
+      <th>0</th>
+      <th>0</th>
     </tr>
-    <% unless @project %>
-      <tr>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
-      </tr>
-    <% end %>
+  <% else %>
     <% for project in @projects %>
       <tr>
         <td><%= project.name%></td>
@@ -25,22 +25,23 @@
         <td><%= @count[:sum]%></td>
       </tr>
     <% end %>
-  </table>
+  <% end %>
+</table>
 
-    <br /> <br />
- <table border = "1">
+<br /> <br />
+<table border = "1">
+  <tr>
+    <th>项目</th>
+    <th>状态</th>
+    <th>时间</th>
+  </tr>
+
+  <% for checkin in @checkins %>
     <tr>
-      <th>项目</th>
-      <th>状态</th>
-      <th>时间</th>
+      <td><%= checkin.project.name if checkin.project %></td>
+      <td><%= checkin.state %></td>
+      <td><%= checkin.created_at %></td>
     </tr>
-
-    <% for checkin in @checkins %>
-      <tr>
-        <td><%= checkin.project.name if checkin.project %></td>
-        <td><%= checkin.state %></td>
-        <td><%= checkin.created_at %></td>
-      </tr>
-    <% end %>
-  </table>
-  <%= will_paginate @checkins %>
+  <% end %>
+</table>
+<%= will_paginate @checkins %>

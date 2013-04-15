@@ -1,8 +1,38 @@
-<h1 align="center">欢迎进入签到网站</h1>
-<p align="center">目前为止,我们已经有 <%= @projects_num %>个项目</p>
-<p align="center"> <%= @users_num %>个成员</p>
-<p align="center"> <b> 欢迎你的加入! </b> </p>
 
-
-
-
+<!-- Carousel
+================================================== -->
+<div id="myCarousel" class="carousel slide">
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="/img/slide-01.jpg" alt="">
+      <div class="container">
+        <div class="carousel-caption">
+          <h1>欢迎进入签到网站</h1>
+          <p class="lead">现在我们已有<%= @projects_num %>个项目<%= @users_num %>个成员，欢迎您的加入</p>
+          <a class="btn btn-large btn-primary" href="/users/sign_up">注册</a>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <img src="../img/slide-02.jpg" alt="">
+      <div class="container">
+        <div class="carousel-caption">
+          <h1>高效</h1>
+          <p class="lead">我们能提供给你最方便的签到服务，您做这里能感受到高效与快捷.</p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <img src="../img/slide-03.jpg" alt="">
+      <div class="container">
+        <div class="carousel-caption">
+          <h1>方便</h1>
+          <p class="lead">当您打卡后，项目负责人会自动收到邮件提醒。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+<!-- /.carousel -->
