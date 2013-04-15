@@ -1,5 +1,8 @@
+<div class="well">
+  <p align="center"> <b><%=@time.strftime("%Y/%m")%></b></p>
+</div>
 <table class="table table-striped table-bordered" border = "1">
-  <caption><p><%= @user.email %>:<b><%= @time.strftime("%Y/%m")%></b></p></caption>
+  <caption><p><%= @user.email %></p></caption>
   <tr>
     <% if @time_last_month > @time_earlist_checkin %>
       <td>
@@ -15,8 +18,8 @@
   </tr>
   <tr>
     <tr>
-      <th>时间</th>
-      <th>状态</th>
+      <th><p align="center"><b>日期</b></p</th>
+      <th><p align="center"><b>状态</b></p</th>
     </tr>
 
     <% for day in 1..@checkins_on_month.length %>
@@ -30,7 +33,7 @@
                 <tr class="error">
     <% end %>
 
-             <td align="center"><%= day %></td>
+    <td > <p align="center"><%= day %></p></td>
         <% if @checkins_on_month[day] == nil %>
           <td></td>
           <% elsif @checkins_on_month[day].pending? %>

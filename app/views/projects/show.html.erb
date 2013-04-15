@@ -1,5 +1,7 @@
-<p>项目名称:<%= @project.name %> </p>
-<p>项目描述:<%= @project.description %></p>
+<div class="well">
+  <p align="center"><b><%=@project.name %></b> </p>
+</div>
+<p align="center">项目描述:<%= @project.description %></p>
 <% if can? :manage, @project %>
   <%= form_tag(project_path, :method => "put")  do %>
     <%= label_tag(:new_mem,"增加新成员") %>
@@ -7,7 +9,7 @@
     <%  User.all.each {|user| @emails += "<option>#{user.email}</option>" if user != current_user }%>
     <%= select_tag(:new_member,@emails.html_safe) %>
     <%= hidden_field_tag(:project_id, params[:id]) if false %>
-    <%= submit_tag("确定") %>
+    <%= submit_tag("确定", class:"btn") %>
   <% end %>
   <p ><b>项目状况:</b></p>
  

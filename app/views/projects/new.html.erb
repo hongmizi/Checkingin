@@ -3,10 +3,11 @@
   <%= form_for @project, :validate => true do |f| %>
     <div class="input-prepend">
       <span class="add-on">标题</span>
-    <%= f.text_field :name, placeholder:"输入一个标题...", class:"input-xxlarge", :validate => {:pressence => true } %>
-  </div>
+      <%= f.text_field :name, placeholder:"输入一个标题...", class:"input-xxlarge", :validate => {:pressence => true } %>
+    </div>
     <%= f.label "描述:"%>
-    <%= f.text_area :description,placeholder:"描述一下项目...", :validatte => true %>
+    <%= f.text_area :description,placeholder:"描述一下项目...项目成员可见", class:"span6", :validatte => true %>
+    <br />
     <%= f.submit "创建新项目",class:"btn", :disable_with => "正在提交 ..." %>
   <% end%>
 </div>

@@ -1,38 +1,92 @@
+<style>
 
-<!-- Carousel
-================================================== -->
-<div id="myCarousel" class="carousel slide">
-  <div class="carousel-inner">
-    <div class="item active">
-      <img src="/img/slide-01.jpg" alt="">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>欢迎进入签到网站</h1>
-          <p class="lead">现在我们已有<%= @projects_num %>个项目<%= @users_num %>个成员，欢迎您的加入</p>
-          <a class="btn btn-large btn-primary" href="/users/sign_up">注册</a>
+
+
+  /* CUSTOMIZE THE NAVBAR
+  -------------------------------------------------- */
+
+  /* Carousel base class */
+  .carousel {
+    margin-bottom: 60px;
+  }
+
+  .carousel .container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .carousel-control {
+    background-color: transparent;
+    border: 0;
+    font-size: 120px;
+    margin-top: 0;
+    text-shadow: 0 1px 1px rgba(0,0,0,.4);
+  }
+
+  .carousel .item {
+    height: 500px;
+  }
+  .carousel img {
+    min-width: 100%;
+    height: 500px;
+  }
+
+  .carousel-caption {
+    background-color: transparent;
+    position: static;
+    max-width: 550px;
+    padding: 0 20px;
+    margin-bottom: 100px;
+  }
+  .carousel-caption h1,
+  .carousel-caption .lead {
+    margin: 0;
+    line-height: 1.25;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,.4);
+  }
+  .carousel-caption .btn {
+    margin-top: 10px;
+  }
+
+  </style>
+
+  <!-- Carousel
+  ================================================== -->
+  <div id="myCarousel" class="carousel slide">
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="/img/slide-01.jpg" alt="">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>欢迎进入签到网站</h1>
+            <p class="lead">现在我们已有<%= @projects_num %>个项目<%= @users_num %>个成员，欢迎您的加入</p>
+            <a class="btn btn-large btn-primary" href="/users/sign_up">注册</a>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <img src="../img/slide-02.jpg" alt="">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>高效</h1>
+            <p class="lead">我们能提供给你最方便的签到服务，您做这里能感受到高效与快捷.</p>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <img src="../img/slide-03.jpg" alt="">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>方便</h1>
+            <p class="lead">当您打卡后，项目负责人会自动收到邮件提醒。</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="item">
-      <img src="../img/slide-02.jpg" alt="">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>高效</h1>
-          <p class="lead">我们能提供给你最方便的签到服务，您做这里能感受到高效与快捷.</p>
-        </div>
-      </div>
-    </div>
-    <div class="item">
-      <img src="../img/slide-03.jpg" alt="">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>方便</h1>
-          <p class="lead">当您打卡后，项目负责人会自动收到邮件提醒。</p>
-        </div>
-      </div>
-    </div>
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
   </div>
-  <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-  <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-</div>
-<!-- /.carousel -->
+  <!-- /.carousel -->
