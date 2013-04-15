@@ -1,18 +1,26 @@
-<h2>Sign up</h2>
+<style type="text/css">
+  body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+  }
+</style>
+<div class="container">
+  <h2>注册</h2>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+  <div>
+  <%= f.email_field :email, placeholder:"邮箱", :autofocus => true %></div>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+  <div>
+  <%= f.password_field :password, placeholder:"密码" %></div>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+  <div>
+  <%= f.password_field :password_confirmation, placeholder:"确认密码" %></div>
 
-  <div><%= f.submit "Sign up" %></div>
+  <div><%= f.submit "注册", class:"btn btn-large" %></div>
 <% end %>
-
 <%= render "devise/shared/links" %>
+</div>
