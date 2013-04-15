@@ -9,8 +9,9 @@
     <%= hidden_field_tag(:project_id, params[:id]) if false %>
     <%= submit_tag("确定") %>
   <% end %>
-  <p>项目状况:</p>
-  <table border = "0">
+  <p ><b>项目状况:</b></p>
+ 
+  <table class="table table-striped table-bordered" border = "1">
     <tr>
       <th>成员</th>
       <th>待审</th>

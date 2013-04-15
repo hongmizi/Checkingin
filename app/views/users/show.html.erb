@@ -1,24 +1,35 @@
-<p> <b>你创建的项目:</b> </p>
-<% if @projects.blank? %>
-  空
-<% else %>
-  <ol>
-    <% for project in @projects %>
-      <li> <%= link_to project.name, project_path(project.id) %>   <%= project.description %> </li>
-    <% end %>
-  </ol>
-<% end %>
+<br /><br />
+<div class="container">
+  <div class="row-fluid">
+    <div class="span6">
+      <p> <b>你创建的项目:</b> </p>
+      <% if @projects.blank? %>
+        空
+      <% else %>
+        <ol>
+          <% for project in @projects %>
+            <li>
+              <%= link_to(project.name, project_path(project.id),class:"btn")%>    </li> 
+            <br />
+          <% end %>
+        </ol>
+      <% end %>
 
-<p><b>你参与的项目:</b></p>
-<% if @join_projects.blank?%>
-  空
-<%else%>
-  <ol>
-    <% for project in @join_projects %>
-      <li>
-         <%= link_to project.name, project_path(project.id)%>
-         <%= button_to( "今日打卡", checkins_path(:project_id => project.id))%>
-      </li>
-    <% end %>
-  </ol>
-<% end %>
+    </div>
+    <div class="span6">
+      <p><b>你参与的项目:</b></p>
+      <% if @join_projects.blank?%>
+        空
+      <%else%>
+        <ol>
+          <% for project in @join_projects %>
+            <li>
+              <%= link_to(project.name, project_path(project.id), class:"btn")%>
+              <%= button_to( "今日打卡", checkins_path(:project_id => project.id), class:"btn")%>
+            </li>
+            <br />
+          <% end %>
+        </ol>
+      <% end %>
+    </div>
+  </div>
