@@ -1,0 +1,11 @@
+<p>你好:</p>
+<p>在项目<b> <%= @invite.project.name %> </b> 中 </p>
+<p><%= @invite.owner.name%>&nbsp; <%= @invite.owner.email %> 于 <b> <%= Time.now %> </b> 邀请你加入 </p>
+<p>并说：</p>
+<p><%= @invite.message %></p>
+请选择
+<% address = "http://checkingin.herokuapp.com"%>
+<%=  link_to "拒绝", sprintf("%s/projects/%s/invites/%s?state=%s&token=%s",address,@invite.project_id,@invite.id,"declined",@invite.token)%>
+或
+<%=  link_to "同意", sprintf("%s/projects/%s/invites/%s?state=%s&token=%s",address,@invite.project_id,@invite.id,"approved",@invite.token)%>
+

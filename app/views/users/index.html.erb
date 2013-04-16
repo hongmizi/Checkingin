@@ -22,7 +22,7 @@
     <% for project in @projects %>
       <tr>
         <td><%= project.name %></td>
-        <td><%= button_to "退出",project_memberships_path(project_id:project.id), :data => { :confirm => "确定要退出这个项目么?" }, :method=> :delete %>
+        <td><%= link_to "退出", project_memberships_path(project.id), :data => {:confirm => "Are you sure?"}, :method => :delete, :class => "btn" %></td>
       </tr>
     <% end %>
   </table>
