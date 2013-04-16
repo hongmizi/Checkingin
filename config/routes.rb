@@ -1,14 +1,17 @@
 Checkingin::Application.routes.draw do
+
   root :to => "home#index"
   devise_for :users
 
   get '/profile/', :to => 'users#index'
+  put '/profile/', :to => 'users#update'
   resources :users
 
   resources :checkins
 
   get '/projects/:project_id/checkins/:id', :to => 'management/checkins#update'
   resources :projects do
+    delete '/memberships/', :to => 'memberships#destroy'
     resources :checkins, :module => "management"
   end
 

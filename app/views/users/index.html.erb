@@ -1,0 +1,30 @@
+<br />
+<div class="container">
+  <div class="span3">
+    你的邮箱:<%= current_user.email %>
+  <div>
+  <%= link_to "重置密码",  edit_user_password_path %>
+ </div>
+
+ 你的姓名:<b><%= current_user.nickname %></b>
+<%= form_for @nickname, :method => :put  do |f| %>
+  <%= f.text_field :nickname, placeholder:"设置姓名 输入你的名字" %>
+  <%= f.submit "确定", class:"btn"%>
+<% end %>
+</div>
+<div class="span8">
+  <table class="table">
+    <caption>参与项目管理</caption>
+    <tr>
+      <th>项目名称</th>
+      <th></th>
+      <tr>
+    <% for project in @projects %>
+      <tr>
+        <td><%= project.name %></td>
+        <td><%= button_to "退出",project_memberships_path(project_id:project.id), :data => { :confirm => "确定要退出这个项目么?" }, :method=> :delete %>
+      </tr>
+    <% end %>
+  </table>
+</div>
+</div>
