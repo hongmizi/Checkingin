@@ -33,21 +33,10 @@ class ProjectsController < ApplicationController
   def update
     id = params[:id]
     @project = Project.find(id)
-    if not @project
-      redirect_to project_path(id), alert:"不能找到此项目,请重试!"
-      return 
-    end
     authorize! :manage, @project
-    if @project.owner != current_user
-      redirect_to project_path(id), alert:"你不是此项目的管理员!"
-      return
-    end
+
     user_email= params[:new_member]
     @user = User.find_by_email(user_email)
-    if not @user
-      redirect_to project_path(id), alert:"不能找到相应用户,请重新输入!"
-      return
-    end
     if @project.users.include?(@user)
       redirect_to project_path(id), alert:"此用户已经在项目中了.."
       return
