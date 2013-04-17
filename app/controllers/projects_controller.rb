@@ -31,26 +31,5 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    id = params[:id]
-    @project = Project.find(id)
-    authorize! :manage, @project
-
-    user_email= params[:new_member]
-    @user = User.find_by_email(user_email)
-    if @project.users.include?(@user)
-      redirect_to project_path(id), alert:"此用户已经在项目中了.."
-      return
-    end
-    if @project.owner == @user 
-      redirect_to project_path(id), alert:"你不能添加自己为项目成员..."
-      return
-    end
-    if Membership.create!(:user_id => @user.id, :project_id => @project.id)
-      redirect_to project_path(id),notice:"成功添加用户!"
-      return 
-    else
-      redirect_to project_path(id), alert:"添加用户失败!"
-      return
-    end
   end
 end

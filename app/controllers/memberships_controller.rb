@@ -3,12 +3,12 @@ class MembershipsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_project_and_user
   def destroy
-    if  Membership.where(project_id:@project.id, user_id:@user.id).first.destroy # todo should use destory
-      flash.notice = "退出项目成功！"
+    if  Membership.where(project_id:@project.id, user_id:@user.id).first.destroy # todo should 对管理员和用户有不同的提示！` 
+      flash.notice = "成功！"
       redirect_to user_path current_user.id
       return
     else
-      flash.alert = "退出项目失败！"
+      flash.alert = "失败！"
       redirect_to user_path current_user.id
       return
     end
