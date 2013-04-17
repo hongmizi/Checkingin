@@ -22,7 +22,6 @@ class InvitesController < ApplicationController
   end
   def update
     invite = Invite.find(params[:id])
-  end
     if current_user.id == invite.invited_user_id and params[:token] == invite.token
       if params[:state] == "approved"
         invite.approve!
@@ -37,3 +36,5 @@ class InvitesController < ApplicationController
       
     end
 end
+end
+

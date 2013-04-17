@@ -7,7 +7,7 @@ class Invite < ActiveRecord::Base
     event :approve do
       transition [:pending] => :approved
     end
-    event :declin do
+    event :decline do
       transition [:pending] => :declined
     end
   end
