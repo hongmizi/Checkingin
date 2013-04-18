@@ -1,6 +1,7 @@
 require 'spec_helper'
 describe CheckinsController do
   before do
+    Delayed::Worker.delay_jobs = false
     @manage = FactoryGirl.create(:user)
     @project = FactoryGirl.create(:project, user_id:@manage.id)
     @member = FactoryGirl.create(:user)
@@ -23,14 +24,14 @@ describe CheckinsController do
     it "should can check in" do
       lambda do
         post :create, project_id:@project.id
-      end.should change(Checkin.all, :count).by(1) #reload!
+      end.should change(Checkin, :count).by(1) #reload! TODO 为什么all 不行
     end
 
     it "should can not check in if user already checkin" do
     @checkin_1 = FactoryGirl.create(:checkin, user_id:@member.id, project_id:@project.id)
       lambda do
         post :create, project_id:@project.id
-      end.should change(Checkin.all, :count).by(0)
+      end.should change(Checkin, :count).by(0)
 
     end
   end

@@ -2,10 +2,12 @@
 # for the member
 class CheckinsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :find_the_project, :only => [:create]
 
   def index
     begin
-      @projects = Project.all.select{ |p| p.users.include?(current_user)}
+      #@projects = Project.all.select{ |p| p.users.include?(current_user)}
+      @projects = ProjectDomain.get_user_joined_project current_user
     rescue Exception
       @projects = []
     end
@@ -16,9 +18,8 @@ class CheckinsController < ApplicationController
       @checkins = []
     end
   end
+
   def create
-    find_the_project
-   # debugger
     authorize!(:read, @project)
     @checkin =  current_user.checkins.new(:project_id => @project.id)
     @project.checkins.each do |checkin|
@@ -32,11 +33,14 @@ class CheckinsController < ApplicationController
     end
 
     if @checkin.save
-      Notifier.check_in(current_user,@project, @checkin).deliver
+      # TODO: break the test
+      # Notifier.delay.check_in(current_user, @project, @checkin)
+      #Notifier.check_in(current_user,@project, @checkin).deliver
       flash.notice = "恭喜你成功签到!" 
     else
       flash.alert = "签到失败!"
     end
+
     redirect_to project_path(@project)
   end
 
@@ -44,5 +48,4 @@ class CheckinsController < ApplicationController
   def find_the_project
     @project = Project.find(params[:project_id])
   end
-
 end

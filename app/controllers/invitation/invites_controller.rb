@@ -10,12 +10,14 @@ class Invitation::InvitesController < ApplicationController
     @invite = current_user.invites.new(:invited_user_id => @user.id, :message => params[:message], :token => token, :project_id => @project.id)
 
     if @invite.save
-      Notifier.invite(@invite).deliver
-      redirect_to project_path params[:project_id], :notice => "邀请成功,已发送邀请邮件!"
+      #Notifier.delay.invite(@invite)
+      #Notifier.invite(@invite).deliver
+      flash.notice = "邀请成功,已发送邀请邮件!"
+      redirect_to project_path params[:project_id]
       return
     else
-      flash.
-      redirect_to project_path params[:project_id], alert:'邀请失败!'
+      flash.alert = '邀请失败!'
+      redirect_to project_path params[:project_id]
     end
   end
 

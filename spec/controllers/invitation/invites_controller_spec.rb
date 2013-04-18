@@ -10,7 +10,7 @@ describe Invitation::InvitesController do
       sign_in @manage
     lambda do
       post :create, project_id:@project.id, user_email:@member.email
-    end.should change(Invite.all, :count).by(1)
+    end.should change(Invite, :count).by(1)
     end
   end
 
@@ -22,12 +22,12 @@ describe Invitation::InvitesController do
     it "should can approve the invitation" do
       lambda do
         get :update, id:@invite.id, token:"123456789", state:"approved", project_id:@project.id
-      end.should change(Membership.all, :count).by(1)
+      end.should change(Membership, :count).by(1)
     end
     it "should can decline the invitation" do
       lambda do
         get :update, id:@invite.id, token:"123456789", state:"declined", project_id:@project.id
-      end.should change(Membership.all, :count).by(0)
+      end.should change(Membership, :count).by(0)
     end
     it "should redirect to root_path if token is wrong" do
         get :update, id:@invite.id, token:"789", state:"declined", project_id:@project.id

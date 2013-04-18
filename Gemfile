@@ -8,6 +8,10 @@ gem 'cancan'
 gem 'devise'
 gem 'will_paginate','~>3.0'
 gem 'unicorn'
+
+gem 'delayed_job_active_record'
+gem 'daemons'
+
 gem 'tinymce-rails'
 gem 'client_side_validations'
 group :test do

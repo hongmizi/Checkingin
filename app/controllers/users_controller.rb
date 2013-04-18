@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   def index
   end
   def profile
-    @projects = Project.all.select { |p| p.users.include? current_user }
+    # @projects = Project.all.select { |p| p.users.include? current_user }
+    @projects = ProjectDomain.get_user_joined_project current_user
     @nickname = "" 
   end
   
