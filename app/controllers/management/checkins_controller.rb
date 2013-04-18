@@ -31,7 +31,6 @@ class Management::CheckinsController < ApplicationController
       @time_earlist_checkin = Time.now
     end
     @checkins_on_month = CheckinDomain.new.get_user_checkins_on_month(@time,@user.id,@project.id)
-
   end
   
   def update

@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   attr_accessible :name, :description
+  #todo after destory ...  before destroy ...
   validates :name, :description , :presence => true
   has_many :checkins, :dependent => :destroy
 

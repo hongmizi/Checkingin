@@ -7,6 +7,6 @@ FactoryGirl.define do
     invited_user_id 1
     message "MyString"
     state "pending"
-    token "MyString"
+    token "123456789"
   end
 end

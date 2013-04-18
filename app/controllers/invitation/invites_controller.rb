@@ -21,16 +21,6 @@ class Invitation::InvitesController < ApplicationController
 
   def update
     invite = Invite.find(params[:id])
-  #  debugger
-  #  puts "--------- 1"
-  #  puts current_user.id
-  #  puts invite.invited_user_id
-  #  puts current_user.id == invite.invited_user_id
-  #  puts "--------- 2 "
-  #  puts invite.token
-  #  puts params[:token] 
-  #  puts params[:token] == invite.token
-  #  puts "-----------------------------"
     if current_user.id == invite.invited_user_id and params[:token] == invite.token
       if params[:state] == "approved" and InviteDomain.approved_invite invite 
         invite.approve!

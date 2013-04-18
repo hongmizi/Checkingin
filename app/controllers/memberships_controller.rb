@@ -4,39 +4,33 @@ class MembershipsController < ApplicationController
   before_filter :get_project_and_user
   def destroy
     if  Membership.where(project_id:@project.id, user_id:@user.id).first.destroy # todo should 对管理员和用户有不同的提示！` 
-      flash.notice = "成功！"
-      redirect_to user_path current_user.id
+      redirect_to user_path current_user.id, notice:"成功！"
       return
     else
-      flash.alert = "失败！"
-      redirect_to user_path current_user.id
+      redirect_to user_path current_user.id, notice:"失败!"
       return
     end
   end
-end
-def show
-end
-private
 
-def get_project_and_user
-  @project = Project.find(params[:project_id])
-  unless @project
-    flash.alert = "找不到项目！"
-    redirect_to root_path 
-    return
+  def show
   end
-  unless params[:user_id]
-    @user = current_user
-  else
-    @user = User.find(params[:user_id])
-  end
-  unless @user
-    flash.alert = "找不到用户"
-    redirect_to project_path @project.id
-    return
-  end
-  if not @project.users.include? @user and not can? :manage, @project
-    flash.alert = "对不起，你无权访问这个项目!"
-    redirect_to project_path @project.id
+
+  private
+
+  def get_project_and_user
+    @project = Project.find(params[:project_id])
+    unless params[:user_id]
+      @user = current_user
+    else
+      @user = User.find(params[:user_id])
+    end
+    if can? :manage, @project
+      return 
+    elsif can? :read, @project
+      @user = current_user
+      return
+    else
+      redirect_to project_path @project.id, alert:"对不起，你无权访问这个项目!"
+    end
   end
 end

@@ -19,7 +19,7 @@
     <% for project in @projects %>
       <tr>
         <td><%= project.name%></td>
-        <% @count = CheckinDomain.new.get_user_checkins_count_in_project(current_user.id, project.id)%>
+        <%  @count = CheckinDomain.new.get_user_checkins_count_in_project(current_user.id, project.id)%>
         <td><%= @count[:pending]%></td>
         <td><%= @count[:declined]%></td>
         <td><%= @count[:approved]%></td>

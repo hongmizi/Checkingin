@@ -3,9 +3,12 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+  end
+  def profile
     @projects = Project.all.select { |p| p.users.include? current_user }
     @nickname = "" 
   end
+  
   def show
     @projects = current_user.projects
     @join_projects =[]
@@ -15,6 +18,7 @@ class UsersController < ApplicationController
       end
     end
   end
+  
   def update
     if params[:nickname] and params[:nickname] != ""
       current_user.nickname = params[:nickname]

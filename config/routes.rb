@@ -3,7 +3,7 @@ Checkingin::Application.routes.draw do
   root :to => "home#index"
   devise_for :users
 
-  get '/profile/', :to => 'users#index'
+  get '/profile/', :to => 'users#profile'
   put '/profile/', :to => 'users#update'
   resources :users
 

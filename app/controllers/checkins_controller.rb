@@ -2,16 +2,23 @@
 # for the member
 class CheckinsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :find_the_project
 
   def index
-    @projects = Project.all.select{ |p| p.users.include?(current_user)}
-
+    begin
+      @projects = Project.all.select{ |p| p.users.include?(current_user)}
+    rescue Exception
+      @projects = []
+    end
     params[:page] = 1 unless params[:page]
-    @checkins = Checkin.where(user_id:current_user.id).paginate(page:params[:page])
-
+    begin
+      @checkins = Checkin.where(user_id:current_user.id).paginate(page:params[:page])
+    rescue Exception
+      @checkins = []
+    end
   end
   def create
+    find_the_project
+   # debugger
     authorize!(:read, @project)
     @checkin =  current_user.checkins.new(:project_id => @project.id)
     @project.checkins.each do |checkin|
@@ -32,13 +39,10 @@ class CheckinsController < ApplicationController
     end
     redirect_to project_path(@project)
   end
-protected
+
+  private
   def find_the_project
-    begin
-      @project = Project.find(params[:project_id])
-    rescue Exception
-      @project = nil
-    end
+    @project = Project.find(params[:project_id])
   end
 
 end

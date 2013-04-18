@@ -10,6 +10,9 @@ FactoryGirl.define do
     description "test description"
   end
 
+  factory :membership do
+  end
   factory :checkin do
   end
+
 end
