@@ -16,10 +16,11 @@
       <th>0</th>
     </tr>
   <% else %>
-    <% for project in @projects %>
+    <% for project_id in @projects %>
       <tr>
-        <td><%= project.name%></td>
-        <%  @count = CheckinDomain.new.get_user_checkins_count_in_project(current_user.id, project.id)%>
+        <% @project = Project.find(project_id) %>
+        <td><%= @project.name%></td>
+        <%  @count = CheckinDomain.new.get_user_checkins_count_in_project(current_user.id, project_id)%>
         <td><%= @count[:pending]%></td>
         <td><%= @count[:declined]%></td>
         <td><%= @count[:approved]%></td>
