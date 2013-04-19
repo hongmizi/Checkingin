@@ -3,7 +3,7 @@
 </div>
 <p align="center">项目描述:<%= @project.description %></p>
 <% if can? :manage, @project %>
-  <%= form_tag(project_invites_path(project_id:@project.id), :method => "post")  do %>
+  <%= form_tag(project_invitations_path(project_id:@project.id), :method => "post")  do %>
     <%= label_tag(:new_mem,"增加新成员") %>
     <% @emails = "" %>
     <%  User.all.each {|user| @emails += "<option>#{user.email}</option>" if user != current_user }%>
