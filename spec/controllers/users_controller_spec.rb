@@ -1,7 +1,7 @@
 require 'spec_helper'
 describe UsersController do
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user,:nickname => "test")
     sign_in @user
   end
   describe "GET /profile" do
@@ -28,7 +28,7 @@ describe UsersController do
     it "should not change name if don't post name" do
       put :update, nickname:""
       @user.reload
-      @user.nickname.should == nil
+      @user.nickname.should == "test" 
     end
   end
 end

@@ -26,8 +26,7 @@ class CheckinsController < ApplicationController
       time = checkin.created_at
       now = Time.now
       if checkin.user == current_user and time.year == now.year and time.month == now.month and  time.day == now.day
-        flash.alert = "你已经签到过了!"
-        redirect_to project_path(@project)
+        redirect_to project_path(@project), alert:"你已经签到过了!"
         return
       end
     end

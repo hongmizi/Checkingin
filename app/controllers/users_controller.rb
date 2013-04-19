@@ -6,18 +6,13 @@ class UsersController < ApplicationController
   end
   def profile
     # @projects = Project.all.select { |p| p.users.include? current_user }
-    @projects = ProjectDomain.get_user_joined_project current_user
+    @projects = ProjectDomain.get_user_joined_projects current_user.id
     @nickname = "" 
   end
   
   def show
     @projects = current_user.projects
-    @join_projects =[]
-    Project.all.each do |project|
-      if project != nil and project.users.include?(current_user)
-        @join_projects << project
-      end
-    end
+    @join_projects = ProjectDomain.get_user_joined_projects current_user.id
   end
   
   def update

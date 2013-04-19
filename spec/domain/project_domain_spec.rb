@@ -9,7 +9,13 @@ describe ProjectDomain do
     FactoryGirl.create(:membership, user_id:@member.id, project_id:@project_2.id)
   end
   it "should get user joined project" do
-    users = ProjectDomain.get_user_joined_project @member
-    users.count.should == 2
+    projects = ProjectDomain.get_user_joined_projects @member.id
+    projects.count.should == 2
+  end
+
+  it "should get correct number of projects " do
+    @project.destroy
+    projects = ProjectDomain.get_user_joined_projects @member.id
+    projects.count.should == 1
   end
 end

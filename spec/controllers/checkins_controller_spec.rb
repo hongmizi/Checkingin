@@ -24,7 +24,7 @@ describe CheckinsController do
     it "should can check in" do
       lambda do
         post :create, project_id:@project.id
-      end.should change(Checkin, :count).by(1) #reload! TODO 为什么all 不行
+      end.should change(Checkin, :count).by(1) #TODO 为什么all 不行
     end
 
     it "should can not check in if user already checkin" do

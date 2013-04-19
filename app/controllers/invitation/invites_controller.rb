@@ -23,8 +23,9 @@ class Invitation::InvitesController < ApplicationController
 
   def update
     invite = Invite.find(params[:id])
+    can?:read, invite
     if current_user.id == invite.invited_user_id and params[:token] == invite.token
-      if params[:state] == "approved" and InviteDomain.approved_invite invite 
+      if params[:state] == "approved" and InviteDomain.approved_invite invite.id
         invite.approve!
         flash.notice = "你成功加入项目！"
         redirect_to user_path current_user.id

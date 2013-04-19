@@ -1,29 +1,30 @@
 class ProjectDomain
- @@users = {}
-  def self.get_user_joined_project user
-     init if @@users.blank?
-     return @@users[user]
+  @@users_projects = {}
+
+  def self.get_user_joined_projects user_id
+    init if @@users_projects.blank?
+    return @@users_projects[user_id]
   end
 
-  def self.add_user_to_project user, project
-    if @@users.blank?
+  def self.add_user_to_projects user_id, project_id
+    if @@users_projects.blank?
       init
     else
-      @@users[user] << project
+      @@users_projects[user_id] << project_id unless @@users_projects[user_id].include? project_id
     end
   end
 
-  def self.remove_user_from_project user, project
-    if @@users.blank?
-      init
-    else
-      @@users[user].delete project
-    end
+  def self.remove_user_from_projects user_id, project_id
+    init if @@users_projects.blank?
+    @@users_projects[user_id].delete project_id
   end
-private
+  private
   def self.init
     User.all.each do |user|
-      @@users[user] = Project.select { |p| p.users.include? user }
+      Project.all.each do |p|
+        @@users_projects[user.id] = [] if @@users_projects[user.id] == nil
+        @@users_projects[user.id] <<  p.id if p.users.include? user
+      end
     end
   end
 end

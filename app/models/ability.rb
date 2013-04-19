@@ -6,8 +6,8 @@ class Ability
     can :read, Project do |project|
       project.users.include?(user) or project.owner == user
     end
-
     can :manage, Project, :user_id => user.id
+    can :read, Invite, :invited_user_id => user.id
     #
     # The first argument to `can` is the action you are giving the user 
     # permission to do.
