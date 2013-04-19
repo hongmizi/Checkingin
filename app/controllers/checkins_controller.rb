@@ -25,8 +25,8 @@ class CheckinsController < ApplicationController
 
     if @checkin.save
       # TODO: break the test
-      Notifier.delay.check_in(current_user, @project, @checkin)
-      #Notifier.check_in(current_user,@project, @checkin).deliver
+      #Notifier.delay.check_in(current_user, @project, @checkin)
+      Notifier.check_in(current_user,@project, @checkin).deliver
       flash.notice = "恭喜你成功签到!" 
     else
       flash.alert = "签到失败!"

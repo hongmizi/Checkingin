@@ -10,8 +10,8 @@ class InvitationsController < ApplicationController
     @invitation = current_user.invitations.new(:invited_user_id => @user.id, :message => params[:message], :token => token, :project_id => @project.id)
 
     if @invitation.save
-      Notifier.delay.invitation(@invitation) # TODO
-      #Notifier.invite(@invitation).deliver
+      #Notifier.delay.invitation(@invitation) # TODO
+      Notifier.invite(@invitation).deliver
       flash.notice = "邀请成功,已发送邀请邮件!"
     else
       flash.alert = '邀请失败!'
