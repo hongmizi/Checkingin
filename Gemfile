@@ -14,14 +14,13 @@ gem 'daemons'
 
 gem 'tinymce-rails'
 gem 'client_side_validations'
-group :test do
-end
 
 group :development, :test do
   gem 'debugger'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'sqlite3'
+  gem 'simplecov'
 end
 
 group :production, :staging do

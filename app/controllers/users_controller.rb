@@ -22,7 +22,7 @@ class UsersController < ApplicationController
         flash.notice = "更改名字成功！"
         redirect_to "/profile/"
       else
-        flash.alet = "更改名字失败！"
+        flash.alert = "更改名字失败！"
         redirect_to "/profile"
       end
     else

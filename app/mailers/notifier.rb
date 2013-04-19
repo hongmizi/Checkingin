@@ -11,13 +11,11 @@ class Notifier < ActionMailer::Base
     @project = project
     @member = member
     @line = line
-#    mail :subject => "打卡通知"
-    mail to: @project.owner.email
+    mail to: @project.owner.email, subject:"打卡通知"
   end
   def invite i
     @invite = i
- #   mail :subject => "项目邀请"
-    mail to: User.find(@invite.invited_user_id).email
+    mail to: User.find(@invite.invited_user_id).email, subject:"项目邀请"
   end
    #handle_asynchronously :invite
    #handle_asynchronously :check_in

@@ -30,6 +30,13 @@ describe Management::CheckinsController do
         get :index, member_id:@member.id, project_id:@project.id
         assigns[:checkins].count.should == 3
       end
+      
+      it "should list null if query a wrong time" do
+        get :index, member_id:@member.id, project_id:@project.id, year:2000, month:1
+        assigns[:checkins].count.should == 3
+        assigns[:checkins_on_month].select {|k,v| v }.count.should == 0 
+      end
+
     end
   end
 

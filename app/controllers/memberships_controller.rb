@@ -3,7 +3,7 @@ class MembershipsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_project_and_user
   def destroy
-    if  Membership.where(project_id:@project.id, user_id:@user.id).first.destroy # todo should 对管理员和用户有不同的提示！` 
+    if  Membership.where(project_id:@project.id, user_id:@user.id).first.destroy # todo should 对管理员和用户有不同的提示！ 更改测试 应该用id 删除某一个。
       redirect_to user_path current_user.id, notice:"成功！"
       return
     else

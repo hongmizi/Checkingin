@@ -1,5 +1,5 @@
 # coding: UTF-8
-class Invitation::InvitesController < ApplicationController
+class InvitationsController < ApplicationController
   before_filter :authenticate_user!
   def create
     @project = Project.find(params[:project_id])
@@ -7,37 +7,36 @@ class Invitation::InvitesController < ApplicationController
     token = (0...16).map{(65+rand(26)).chr}.join
     @user = User.find_by_email params[:user_email]
     # todo 查询是否已经邀请过了！是的话直接发送邮件
-    @invite = current_user.invites.new(:invited_user_id => @user.id, :message => params[:message], :token => token, :project_id => @project.id)
+    @invitation = current_user.invitations.new(:invited_user_id => @user.id, :message => params[:message], :token => token, :project_id => @project.id)
 
-    if @invite.save
-      #Notifier.delay.invite(@invite)
-      #Notifier.invite(@invite).deliver
+    if @invitation.save
+      #Notifier.delay.invitation(@invitation) # TODO
+      Notifier.invite(@invitation).deliver
       flash.notice = "邀请成功,已发送邀请邮件!"
-      redirect_to project_path params[:project_id]
-      return
     else
       flash.alert = '邀请失败!'
-      redirect_to project_path params[:project_id]
     end
+
+    redirect_to project_path params[:project_id] and return
   end
 
   def update
-    invite = Invite.find(params[:id])
-    can?:read, invite
-    if current_user.id == invite.invited_user_id and params[:token] == invite.token
-      if params[:state] == "approved" and InviteDomain.approved_invite invite.id
-        invite.approve!
+    invitation = Invite.find(params[:id])
+    can?:read, invitation
+    if current_user.id == invitation.invited_user_id and params[:token] == invitation.token
+      if params[:state] == "approved" and InviteDomain.approved_invite invitation.id
+        invitation.approve!
         flash.notice = "你成功加入项目！"
         redirect_to user_path current_user.id
           return
       elsif params[:state] == "declined"
-        invite.decline!
+        invitation.decline!
         flash.alert = "你已拒绝参加此项目!"
         redirect_to user_path current_user.id
         return 
       else
         flash.alert = "参加项目失败！"
-        redirect_to user_path current_user.id        
+        redirect_to user_path current_user.id
         return
       end
     else

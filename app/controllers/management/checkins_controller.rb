@@ -9,10 +9,8 @@ class Management::CheckinsController < ApplicationController
     @user = User.find(params[:member_id])
     @checkins = @project.checkins.where(:user_id => params[:member_id]).order("checkins.created_at asc")
     @year = params[:year]
-    @year = Time.now.year if @year == nil
     @month = params[:month]
-    @month = Time.now.month if @month == nil
-    if @year == nil or @month == nil 
+    if params[:year] == nil or params[:month] == nil
       @time = Time.now
     else
       @time = Time.new(@year,@month)
@@ -23,7 +21,7 @@ class Management::CheckinsController < ApplicationController
     @time_next_month +=  24*3600 while @time_next_month.month == @time.month
     @time_last_month -=  24*3600 while @time_last_month.month == @time.month
     @time_last_month = Time.new(@time_last_month.year, @time_last_month.month)
-    
+
     # find the earliest chinckin time in this project
     if @checkins.length != 0
       @time_earlist_checkin = @checkins.first.created_at

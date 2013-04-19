@@ -8,5 +8,5 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   has_many :checkins, :dependent => :destroy
   has_many :projects, :dependent => :destroy
-  has_many :invites
+  has_many :invitations, :class_name => "Invite"
 end

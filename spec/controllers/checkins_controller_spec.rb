@@ -7,7 +7,6 @@ describe CheckinsController do
     @member = FactoryGirl.create(:user)
     FactoryGirl.create(:membership, project_id:@project.id, user_id:@member.id)
   end
-
   describe "GET /index" do
     it "should visit index page" do
       sign_in @member

@@ -34,6 +34,13 @@ describe ProjectsController do
     end
   end
 
+  describe "GET /new" do
+    it "should response 200" do
+      sign_in @user
+      get :new
+      response.code.should == "200"
+    end
+  end
   describe "POST /create" do
     before do
       sign_in @user

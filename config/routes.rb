@@ -14,7 +14,7 @@ Checkingin::Application.routes.draw do
     delete '/memberships/', :to => 'memberships#destroy'
     resources :checkins, :module => "management"
     get '/invites/:id', :to => 'invitation/invites#update'
-    resources :invites, :module => "invitation"
+    resources :invitations
   end
 
   # The priority is based upon order of creation:

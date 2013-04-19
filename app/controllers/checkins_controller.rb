@@ -5,18 +5,10 @@ class CheckinsController < ApplicationController
   before_filter :find_the_project, :only => [:create]
 
   def index
-    begin
-      #@projects = Project.all.select{ |p| p.users.include?(current_user)}
-      @projects = ProjectDomain.get_user_joined_project current_user
-    rescue Exception
-      @projects = []
-    end
+    @projects = ProjectDomain.get_user_joined_projects current_user.id
+    @projects = [] if @projects == nil
     params[:page] = 1 unless params[:page]
-    begin
-      @checkins = Checkin.where(user_id:current_user.id).paginate(page:params[:page])
-    rescue Exception
-      @checkins = []
-    end
+    @checkins = Checkin.where(user_id:current_user.id).paginate(page:params[:page])
   end
 
   def create
@@ -33,8 +25,8 @@ class CheckinsController < ApplicationController
 
     if @checkin.save
       # TODO: break the test
-      # Notifier.delay.check_in(current_user, @project, @checkin)
-      #Notifier.check_in(current_user,@project, @checkin).deliver
+      #Notifier.delay.check_in(current_user, @project, @checkin)
+      Notifier.check_in(current_user,@project, @checkin).deliver
       flash.notice = "恭喜你成功签到!" 
     else
       flash.alert = "签到失败!"
