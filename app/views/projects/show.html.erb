@@ -1,7 +1,12 @@
 <div class="well">
   <p align="center"><b><%=@project.name %></b> </p>
 </div>
-<p align="center">项目描述:<%= @project.description %></p>
+<p align="center">项目描述</p>
+
+ <%= form_for @project do |f| %>
+   <%= f.kindeditor :description%>
+ <% end %>
+
 <% if can? :manage, @project %>
   <%= form_tag(project_invitations_path(project_id:@project.id), :method => "post")  do %>
     <%= label_tag(:new_mem,"增加新成员") %>
