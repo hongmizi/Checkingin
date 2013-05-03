@@ -5,7 +5,7 @@
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= javascript_include_tag "rails.validations"%>
-    <link href="/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.min.css" rel="stylesheet">
     <%= csrf_meta_tags %>
 <style type="text/css">
   body {
@@ -71,7 +71,7 @@
     <!-- alert and notice end-->
     <%= yield %>
     
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
   </body>
 </html>

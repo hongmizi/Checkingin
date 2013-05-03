@@ -24,9 +24,11 @@
         <ol>
           <% for project_id in @join_projects %>
             <li>
-               <%= link_to(Project.find(project_id).name, project_path(project_id))%>
-               <%= button_to( "今日打卡", checkins_path(:project_id => project_id), class:"btn btn-success")%>
-             </li>
+              <%= link_to(Project.find(project_id).name, project_path(project_id))%>
+
+              &nbsp; &nbsp;
+              <%= link_to( "今日打卡", checkins_path(:project_id => project_id), class:"btn btn-success", method: :post)%>
+            </li>
             <br />
           <% end %>
         </ol>
