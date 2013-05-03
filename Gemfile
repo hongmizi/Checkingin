@@ -14,6 +14,7 @@ gem 'daemons'
 
 gem 'tinymce-rails'
 gem 'client_side_validations'
+gem 'rails_kindeditor', '~> 0.3.15'
 
 group :development, :test do
   gem 'debugger'
