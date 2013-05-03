@@ -1,3 +1,4 @@
+require "email_spec"
 require 'simplecov'
 SimpleCov.start do
   add_filter "/initializers/"
@@ -14,6 +15,8 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
 
+  config.include(EmailSpec::Helpers)
+  config.include(EmailSpec::Matchers)
   config.include Devise::TestHelpers, :type => :controller
   # ## Mock Framework
   #
