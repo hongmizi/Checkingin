@@ -1,34 +1,51 @@
 <br />
-<table class="table table-striped table-bordered" border = "1">
-  <tr>
-    <th>项目</th>
-    <th>待审</th>
-    <th>拒绝</th>
-    <th>同意</th>
-    <th>总数</th>
-  </tr>
-  <% unless @projects %>
+
+<% @projects.each do |project| %>
+  <br />
+  <table class="table table-striped table-bordered" border = "1">
+    <caption> <%= project.name %></caption>
     <tr>
-      <th>0</th>
-      <th>0</th>
-      <th>0</th>
-      <th>0</th>
-      <th>0</th>
+      <th>时间</th>
+      <th>待审</th>
+      <th>拒绝</th>
+      <th>同意</th>
+      <th>总数</th>
     </tr>
-  <% else %>
-    <% for project_id in @projects %>
-      <tr>
-        <% @project = Project.find(project_id) %>
-        <td><%= @project.name%></td>
-        <%  @count = CheckinDomain.new.get_user_checkins_count_in_project(current_user.id, project_id)%>
-        <td><%= @count[:pending]%></td>
-        <td><%= @count[:declined]%></td>
-        <td><%= @count[:approved]%></td>
-        <td><%= @count[:sum]%></td>
-      </tr>
-    <% end %>
-  <% end %>
-</table>
+
+    <%@this_month_checkins = CheckinDomain.user_checkins_on_month_in_project current_user, Time.now, project%>
+    <%@this_month_states = CheckinDomain.state_of_checkins @this_month_checkins%>
+    <%@last_month_checkins = CheckinDomain.user_checkins_on_month_in_project current_user, Time.now - 1.month, project%>
+    <%@last_month_states = CheckinDomain.state_of_checkins @last_month_checkins%>
+
+    <tr>
+      <td><%= "#{(Time.now - 1.month).year} #{(Time.now - 1.month).month} "%></td>
+      <td><%= @last_month_states[:pending]%></td>
+      <td><%= @last_month_states[:declined]%></td>
+      <td><%= @last_month_states[:approved]%></td>
+      <td><%= @last_month_checkins.count%></td>
+    </tr>
+    <tr>
+      <td><%= "#{Time.now.year} #{Time.now.month} "%></td>
+      <td><%= @this_month_states[:pending]%></td>
+      <td><%= @this_month_states[:declined]%></td>
+      <td><%= @this_month_states[:approved]%></td>
+      <td><%= @this_month_checkins.count%></td>
+    </tr>
+
+
+    <tr>
+      <td>全部</td>
+      <%  @count = CheckinDomain.new.get_user_checkins_count_in_project(current_user.id, project.id)%>
+      <td><%= @count[:pending]%></td>
+      <td><%= @count[:declined]%></td>
+      <td><%= @count[:approved]%></td>
+      <td><%= @count[:sum]%></td>
+    </tr>
+  </table>
+<% end %>
+
+
+
 
 <br /> <br />
 <table class="table table-striped table-bordered" border = "1">
@@ -40,20 +57,20 @@
 
   <% for checkin in @checkins %>
     <% if checkin == nil %>
-       <tr class="warning">
-   <% elsif checkin.pending? %>
-       <tr class="info">
-   <% elsif checkin.approved? %>
-       <tr class="success">
-   <% else checkin.declined? %>
-       <tr class="error">
-  <% end %>
+      <tr class="warning">
+      <% elsif checkin.pending? %>
+        <tr class="info">
+        <% elsif checkin.approved? %>
+          <tr class="success">
+            <% else checkin.declined? %>
+              <tr class="error">
+              <% end %>
 
 
-      <td><%= checkin.project.name if checkin.project %></td>
-      <td><%= checkin.state %></td>
-      <td><%= checkin.created_at %></td>
-    </tr>
-  <% end %>
-</table>
-<%= will_paginate @checkins %>
+              <td><%= checkin.project.name if checkin.project %></td>
+              <td><%= checkin.state %></td>
+              <td><%= checkin.created_at.localtime %></td>
+            </tr>
+          <% end %>
+        </table>
+        <%= will_paginate @checkins %>

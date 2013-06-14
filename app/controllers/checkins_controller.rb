@@ -5,8 +5,7 @@ class CheckinsController < ApplicationController
   before_filter :find_the_project, :only => [:create]
 
   def index
-    @projects = ProjectDomain.get_user_joined_projects current_user.id
-    @projects = [] if @projects == nil
+    @projects = current_user.joined_projects
     params[:page] = 1 unless params[:page]
     @checkins = Checkin.where(user_id:current_user.id).paginate(page:params[:page])
   end

@@ -5,6 +5,7 @@ class Checkin < ActiveRecord::Base
 
   validates :user_id, :project_id, :state, :presence => true
 
+  
   state_machine :initial => :pending do
     event :approve do
       transition [:pending] => :approved

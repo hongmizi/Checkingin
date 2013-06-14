@@ -9,4 +9,10 @@ class User < ActiveRecord::Base
   has_many :checkins, :dependent => :destroy
   has_many :projects, :dependent => :destroy
   has_many :invitations, :class_name => "Invite"
+
+  def joined_projects
+    Project.select do |project|
+      project.users.include? self
+    end
+  end
 end
