@@ -5,7 +5,8 @@ class Checkin < ActiveRecord::Base
 
   validates :user_id, :project_id, :state, :presence => true
 
-  
+  default_scope order('created_at DESC')
+
   state_machine :initial => :pending do
     event :approve do
       transition [:pending] => :approved

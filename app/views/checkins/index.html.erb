@@ -69,7 +69,7 @@
 
               <td><%= checkin.project.name if checkin.project %></td>
               <td><%= checkin.state %></td>
-              <td><%= checkin.created_at.localtime %></td>
+              <td><%= checkin.created_at.in_time_zone(8) %></td>
             </tr>
           <% end %>
         </table>

@@ -9,7 +9,7 @@ class CheckinDomain
       user.checkins.where(:project_id => project.id).each do |checkin|
         created_at = checkin.created_at
         if created_at.month == time.month and created_at.year == time.year
-          checkins_on_month[time.day] = checkin.state
+          checkins_on_month[created_at.day] = checkin.state
         end
       end
 
