@@ -14,12 +14,16 @@ class CheckinsController < ApplicationController
   def create
     authorize!(:read, @project)
     @checkin =  current_user.checkins.new(:project_id => @project.id)
+
+    if params[:date].present?
+      @checkin.created_at = Time.strptime params[:date], "%m/%d/%Y"
+    end
+
     @project.checkins.each do |checkin|
-      time = checkin.created_at
-      now = Time.now
-      if checkin.user == current_user and time.year == now.year and time.month == now.month and  time.day == now.day
-        redirect_to project_path(@project), alert:"你已经签到过了!"
-        return
+      last_time = checkin.created_at
+      time = @checkin.created_at
+      if checkin.user == current_user and time.year == last_time.year and time.month == last_time.month and  time.day == last_time.day
+       return redirect_to project_path(@project), alert:"你已经签到过了!"
       end
     end
 

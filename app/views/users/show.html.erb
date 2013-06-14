@@ -28,6 +28,22 @@
 
               &nbsp; &nbsp;
               <%= link_to( "今日打卡", checkins_path(:project_id => project_id), class:"btn btn-success", method: :post)%>
+              <%= link_to( "其他日期", "javascript:void(0)", class:"btn btn-success", id:"other_date_#{project_id}")%>
+              <div class="other_time_<%=project_id%>" style="display: none;">
+                <%= form_tag checkins_path(:project_id => project_id), method: :post do%>
+                  <%= text_field_tag :date, "", class:"span3",id:"datetimepicker_#{project.id}" %>
+                  <%= submit_tag "确认在此天打卡", class:"btn"%>
+                  <script>
+                    $("#datetimepicker_<%= project.id%>").datetimepicker({
+                    pickTime: false
+                  });
+
+                    $("#other_date_<%=project_id%>").click(function(){
+                      $(".other_time_<%=project_id%>").show();
+                    })
+                  </script>
+                <% end %>
+              </div>
             </li>
             <br />
           <% end %>
@@ -35,3 +51,5 @@
       <% end %>
     </div>
   </div>
+
+

@@ -1,7 +1,7 @@
 # coding: UTF-8
 class Management::CheckinsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :find_the_project
+  before_filter :load_the_project
   before_filter :authorize_user
 
   # 用户的打卡情况
@@ -30,7 +30,7 @@ class Management::CheckinsController < ApplicationController
     end
     @checkins_on_month = CheckinDomain.new.get_user_checkins_on_month(@time,@user.id,@project.id)
   end
-  
+
   def update
     @checkin = @project.checkins.find(params[:id])
     state = params[:state]
@@ -54,12 +54,12 @@ class Management::CheckinsController < ApplicationController
   
  
   protected
-  def find_the_project
+  def load_the_project
     @project = current_user.projects.find(params[:project_id])
   end
   
   def authorize_user
-    find_the_project if @project.nil?
+    load_the_project if @project.nil?
 
     authorize!(:manage, @project) 
   end
