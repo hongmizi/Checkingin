@@ -20,7 +20,7 @@ class CheckinsController < ApplicationController
 
     @project.checkins.each do |checkin|
       last_time = checkin.created_at
-      time = @checkin.created_at
+      time = Time.now
       if checkin.user == current_user and time.year == last_time.year and time.month == last_time.month and  time.day == last_time.day
        return redirect_to project_path(@project), alert:"你已经签到过了!"
       end
