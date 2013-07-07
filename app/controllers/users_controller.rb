@@ -4,17 +4,18 @@ class UsersController < ApplicationController
 
   def index
   end
+
   def profile
     # @projects = Project.all.select { |p| p.users.include? current_user }
-    @projects = ProjectDomain.get_user_joined_projects current_user.id
+    @projects = current_user.joined_projects
     @nickname = "" 
   end
-  
+
   def show
     @projects = current_user.projects
-    @join_projects = ProjectDomain.get_user_joined_projects current_user.id
+    @join_projects = current_user.joined_projects
   end
-  
+
   def update
     if params[:nickname] and params[:nickname] != ""
       current_user.nickname = params[:nickname]

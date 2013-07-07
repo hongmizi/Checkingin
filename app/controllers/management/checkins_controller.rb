@@ -8,7 +8,6 @@ class Management::CheckinsController < ApplicationController
   def index
     @user = @project.users.find(params[:member_id])
     @checkins = @project.checkins.where(:user_id => params[:member_id]).order("checkins.created_at asc").page(params[:page]).per(30)
-
   end
 
   def update
