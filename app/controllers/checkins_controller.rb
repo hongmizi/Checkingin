@@ -6,8 +6,7 @@ class CheckinsController < ApplicationController
 
   def index
     @projects = current_user.joined_projects
-    params[:page] = 1 unless params[:page]
-    @checkins = Checkin.where(user_id:current_user.id).paginate(page:params[:page])
+    @checkins = Checkin.where(user_id:current_user.id).page(params[:page]).per(30)
   end
 
   def create

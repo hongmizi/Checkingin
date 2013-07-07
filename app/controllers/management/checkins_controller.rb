@@ -6,29 +6,9 @@ class Management::CheckinsController < ApplicationController
 
   # 用户的打卡情况
   def index
-    @user = User.find(params[:member_id])
-    @checkins = @project.checkins.where(:user_id => params[:member_id]).order("checkins.created_at asc")
-    @year = params[:year]
-    @month = params[:month]
-    if params[:year] == nil or params[:month] == nil
-      @time = Time.now
-    else
-      @time = Time.new(@year,@month)
-    end
+    @user = @project.users.find(params[:member_id])
+    @checkins = @project.checkins.where(:user_id => params[:member_id]).order("checkins.created_at asc").page(params[:page]).per(30)
 
-    @time_next_month = @time
-    @time_last_month = @time
-    @time_next_month +=  24*3600 while @time_next_month.month == @time.month
-    @time_last_month -=  24*3600 while @time_last_month.month == @time.month
-    @time_last_month = Time.new(@time_last_month.year, @time_last_month.month)
-
-    # find the earliest chinckin time in this project
-    if @checkins.length != 0
-      @time_earlist_checkin = @checkins.first.created_at
-    else
-      @time_earlist_checkin = Time.now
-    end
-    @checkins_on_month = CheckinDomain.new.get_user_checkins_on_month(@time,@user.id,@project.id)
   end
 
   def update
@@ -49,7 +29,7 @@ class Management::CheckinsController < ApplicationController
     else
       flash.alert = '审批失败!'
     end
-    redirect_to project_path(@project)
+    redirect_to project_checkins_path(@project, member_id: @checkin.user.id)
   end
   
  

@@ -32,13 +32,13 @@
       <tr>
         <td>
           <%= link_to(UserDomain.get_user_name(member.id), project_checkins_path(@project, :member_id => member.id)) %>
-          <%= button_to("删除此用户", project_memberships_path(project_id:@project.id, user_id:member.id), class:"btn", :data => { :confirm => "确定要删除此用户么?" }, :method => :delete)%>
         </td>
           <% @count = CheckinDomain.new.get_user_checkins_count_in_project(member.id, @project.id)%>
           <td><%= @count[:pending]%></td>
           <td><%= @count[:declined]%></td>
           <td><%= @count[:approved]%></td>
           <td><%= @count[:sum]%></td>
+          <td><%= button_to("删除此用户", project_memberships_path(project_id:@project.id, user_id:member.id), class:"btn", :data => { :confirm => "确定要删除此用户么?" }, :method => :delete)%></td>
         </tr>
       <% end %>
     </table>

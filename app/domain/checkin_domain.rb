@@ -1,5 +1,36 @@
 class CheckinDomain
 
+  def self.fill_chart_sum project, user
+
+    checkins = project.checkins.where(user_id: user.id)
+    data = [0,0,0,0,0,0,0,0,0,0,0,0]
+    year = Time.now.year
+
+    checkins.each do |checkin|
+      if checkin.created_at.year == year
+        data[checkin.created_at.month - 1] += 1
+      end
+    end
+
+    data
+  end
+
+
+  def self.fill_chart_approved project, user
+
+    checkins = project.checkins.where(user_id: user.id)
+    data = [0,0,0,0,0,0,0,0,0,0,0,0]
+    year = Time.now.year
+
+    checkins.each do |checkin|
+      if checkin.created_at.year == year and checkin.approved?
+        data[checkin.created_at.month - 1] += 1
+      end
+    end
+
+    data
+  end
+
   def self.user_checkins_on_month_in_project(user, time, project)
       checkins_on_month = {}
       #for day in 1..Time.days_in_month(@time.month, @time.year)
